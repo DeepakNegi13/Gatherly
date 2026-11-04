@@ -30,8 +30,8 @@ function Navbar() {
 							<X className="w-6 h-6" />
 						:	<Menu className="w-6 h-6" />}
 					</button>
-					{/* {isMobileMenuOpen && } */}
-					{/* {isMobileMenuOpen && (
+					
+					{isMobileMenuOpen && (
 						<div className="md:hidden border-t border-[#EBE8DF] bg-[#FAF9F5] px-4 pt-3 pb-6 space-y-4 transition-all">
 							<form action="" className="relative">
 								<Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -93,7 +93,7 @@ function Navbar() {
 								</div>
 							</div>
 						</div>
-					)} */}
+					)}
 					<div className="hidden md:flex items-center gap-1">
 						<Link
 							to="/explore"
