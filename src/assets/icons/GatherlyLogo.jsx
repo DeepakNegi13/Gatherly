@@ -1,0 +1,46 @@
+export function GatherlyLogo({
+  className = "",
+  width = "176",
+  height = "40",
+}) {
+  return (
+    <svg
+      className={className}
+      width={width}
+      height={height}
+      viewBox="0 0 176 40"
+      fill="none"
+      role="img"
+      aria-label="Gatherly"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M9 20C9 13.925 13.925 9 20 9C24.2 9 27.865 11.353 29.73 14.794"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+      <path
+        d="M31 20C31 26.075 26.075 31 20 31C15.8 31 12.135 28.647 10.27 25.206"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+      <circle cx="20" cy="20" r="3.5" fill="currentColor" />
+      <circle cx="30" cy="14" r="3" fill="#F59E0B" />
+      <circle cx="10" cy="26" r="3" fill="#F59E0B" />
+
+      <text
+        x="43"
+        y="26"
+        fill="currentColor"
+        fontFamily="Inter, ui-sans-serif, system-ui, sans-serif"
+        fontSize="19"
+        fontWeight="750"
+        letterSpacing="1.7"
+      >
+        GATHERLY
+      </text>
+    </svg>
+  );
+}

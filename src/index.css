@@ -15,7 +15,6 @@
 		--input: 40 10% 88%;
 		--ring: 24 95% 50%;
 	}
-
 	html {
 		scroll-behavior: smooth;
 		-webkit-font-smoothing: antialiased;

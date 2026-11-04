@@ -22,11 +22,11 @@ const buttonVariants = cva(
 				dark: "bg-[#191919] hover:bg-[#2b2b2b] text-white shadow-sm active:scale-[0.98]",
 			},
 			size: {
-			 default: "h-10 px-4 py-2",
-        sm: "px-3 py-1.5 text-xs rounded-lg gap-1.5",
-        md: "h-10 px-4 py-2 text-sm rounded-xl gap-2",
-        lg: "px-5 py-2.5 text-base font-semibold rounded-xl gap-2.5",
-        icon: "h-10 w-10",
+				default: "h-10 px-4 py-2",
+				sm: "px-3 py-1.5 text-xs rounded-lg gap-1.5",
+				md: "h-10 px-4 py-2 text-sm rounded-xl gap-2",
+				lg: "px-5 py-2.5 text-base font-semibold rounded-xl gap-2.5",
+				icon: "h-10 w-10",
 			},
 		},
 		defaultVariants: {
