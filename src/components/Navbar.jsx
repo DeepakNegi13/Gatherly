@@ -32,7 +32,7 @@ function Navbar() {
 					</button>
 					
 					{isMobileMenuOpen && (
-						<div className="md:hidden border-t border-[#EBE8DF] bg-[#FAF9F5] px-4 pt-3 pb-6 space-y-4 transition-all">
+						<div className="md:hidden border-t border-[#EBE8DF] bg-[#FAF9F5] px-4 pt-3 pb-6 space-y-4 transition-all absolute right-0 z-80 top-18">
 							<form action="" className="relative">
 								<Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
 								<input
