@@ -23,11 +23,16 @@ export function FeaturedCarousel({ events = [] }) {
 			rootNode: (emblaRoot) => emblaRoot.parentElement,
 		}),
 	);
-	const goToPrev = () => emblaApi?.scrollPrev();
-	const goToNext = () => emblaApi?.scrollNext();
+	 const goToPrev = () => {
+    emblaApi?.scrollPrev();
+    emblaApi.plugins().autoplay.reset();
+  };
+  const goToNext = () => {
+    emblaApi?.scrollNext();
+    emblaApi.plugins().autoplay.reset();
+  };
 	useEffect(() => {
 		if (!emblaApi) return;
-		emblaApi.plugins().autoplay?.play();
 	}, [emblaApi]);
 
 	return (
