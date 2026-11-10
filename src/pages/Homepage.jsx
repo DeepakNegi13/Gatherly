@@ -18,7 +18,6 @@ export default function Home() {
         } = await axios.get(
           "https://eventsphere-server-mfdb.onrender.com/api/events/featured",
         );
-        console.log(data);
         setFeaturedEvents(data);
       } catch (error) {} finally {
         setIsLoading(false)
