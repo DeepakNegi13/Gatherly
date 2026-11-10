@@ -6,22 +6,27 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function Home() {
-	const [event,setEvent] = useState([]);
+	 const [featuredEvents, setFeaturedEvents] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
-	const featuredEvent = async function(){
-		try {
-			const {data} = await axios.get("https://eventsphere-server-mfdb.onrender.com/api/events/featured");
-			setEvent(Array.isArray(data.data) ? data.data : []);
-		} catch (error) {
-			console.error("Failed to load featured events", error);
-			setEvent([]);
-		} finally {
-			setIsLoading(false);
-		}
-	}
-	useEffect(()=>{
-		featuredEvent();
-	},[])
+
+  useEffect(() => {
+    async function getFeaturedEvents() {
+      setIsLoading(true)
+      try {
+        let {
+          data: { data },
+        } = await axios.get(
+          "https://eventsphere-server-mfdb.onrender.com/api/events/featured",
+        );
+        console.log(data);
+        setFeaturedEvents(data);
+      } catch (error) {} finally {
+        setIsLoading(false)
+      }
+    }
+    getFeaturedEvents();
+  }, []);
+
 	return (
 		<div className="space-y-16 pb-20">
 			<section className="relative pt-12 pb-6 sm:pt-16 sm:pb-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -79,7 +84,7 @@ export default function Home() {
 
 				{isLoading ?
 					<div className="aspect-21/9 rounded-3xl bg-[#EBE8DF]/50 animate-pulse"></div>
-				:	<FeaturedCarousel event = {event}/>}
+				:	<FeaturedCarousel events={featuredEvents}/>}
 			</section>
 		</div>
 	);
