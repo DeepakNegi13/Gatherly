@@ -29,11 +29,11 @@ export function FeaturedCarousel({ event = [] }) {
 				</div>
 			</div>
 			<ChevronRight
-				className="absolute right-0 items-center"
+				className="absolute right-0 top-1/2 size-10 text-background"
 				onClick={goToNext}
 			/>
 			<ChevronLeft
-				className="absolute left-0 items-center"
+				className="absolute left-0 top-1/2 size-10 text-background"
 				onClick={goToPrev}
 			/>
 		</div>
