@@ -14,7 +14,15 @@ import { Link } from "react-router-dom";
 import { Badge } from "./ui/badge";
 
 export function FeaturedCarousel({ events = [] }) {
-	const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({stopOnInteraction:true,stopOnMouseEnter:true})]);
+	const [emblaRef, emblaApi] = useEmblaCarousel(
+		{ loop: true },
+		Autoplay({
+			delay: 4000,
+			stopOnInteraction: false,
+			stopOnMouseEnter: true,
+			rootNode: (emblaRoot) => emblaRoot.parentElement,
+		}),
+	);
 	const goToPrev = () => emblaApi?.scrollPrev();
 	const goToNext = () => emblaApi?.scrollNext();
 	useEffect(() => {
