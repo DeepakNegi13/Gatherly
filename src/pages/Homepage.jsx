@@ -1,11 +1,27 @@
-import {FeaturedCarousel} from "#components/FeaturedCarousel";
-import { useState } from "react";
-import { Button } from "../components/ui/button";
+import { FeaturedCarousel } from "#components/FeaturedCarousel";
+import { useEffect, useState } from "react";
+import { Button } from "../components/ui/Button";
 import { ChevronRight, Compass, Flame, Sparkles } from "lucide-react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function Home() {
-	const [isLoading, setIsLoading] = useState(false);
+	const [event,setEvent] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
+	const featuredEvent = async function(){
+		try {
+			const {data} = await axios.get("https://eventsphere-server-mfdb.onrender.com/api/events/featured");
+			setEvent(Array.isArray(data.data) ? data.data : []);
+		} catch (error) {
+			console.error("Failed to load featured events", error);
+			setEvent([]);
+		} finally {
+			setIsLoading(false);
+		}
+	}
+	useEffect(()=>{
+		featuredEvent();
+	},[])
 	return (
 		<div className="space-y-16 pb-20">
 			<section className="relative pt-12 pb-6 sm:pt-16 sm:pb-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,7 +79,7 @@ export default function Home() {
 
 				{isLoading ?
 					<div className="aspect-21/9 rounded-3xl bg-[#EBE8DF]/50 animate-pulse"></div>
-				:	<FeaturedCarousel />}
+				:	<FeaturedCarousel event = {event}/>}
 			</section>
 		</div>
 	);

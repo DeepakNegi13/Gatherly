@@ -1,38 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { Button } from "./ui/Button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import axios from "axios";
 
-export function FeaturedCarousel() {
+export function FeaturedCarousel({ event = [] }) {
 	const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()]);
-	const [carousalData, setCarousalData] = useState("");
 	const goToPrev = () => emblaApi?.scrollPrev();
 	const goToNext = () => emblaApi?.scrollNext();
-
 	useEffect(() => {
 		if (!emblaApi) return;
 		emblaApi.plugins().autoplay?.play();
 	}, [emblaApi]);
-	const fetchimg = async function () {
-		const data = await axios.get(
-			"https://eventsphere-server-mfdb.onrender.com/api/events/featured",
-		);
-		console.log(data);
-		setCarousalData(data);
-	};
-	useEffect(() => {
-		fetchimg();
-	}, []);
 
 	return (
 		<div className="embla relative">
 			<div className="embla__viewport" ref={emblaRef}>
 				<div className="embla__container">
-					<div className="embla__slide">Slide 1</div>
-					<div className="embla__slide">Slide 2</div>
-					<div className="embla__slide">Slide 3</div>
+					{event.map((item) => (
+						<div
+							key={item._id}
+							className="embla__slide min-h-[300px] rounded-3xl bg-cover bg-center bg-no-repeat"
+							style={{
+								backgroundImage: `url(${item.image})`,
+							}}
+							aria-label={item.title}
+						/>
+					))}
 				</div>
 			</div>
 			<ChevronRight
