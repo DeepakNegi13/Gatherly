@@ -84,12 +84,12 @@ export function FeaturedCarousel({ events = [] }) {
 												<Badge
 													variant="outline"
 													size="sm"
-													className="text-stone-200 border-white/20 bg-white/10 backdrop-blur-sm">
+													className="text-stone-200 border-white/20 bg-white/10 backdrop-blur-sm px-2 py-3">
 													{event.category.name}
 												</Badge>
 											)}
 											{/* mode of event button */}
-											<Badge variant="outline" size="sm" className="text-stone-200">
+											<Badge variant="outline" size="sm" className="text-stone-200 px-2 py-3">
 												{event.format === "online" ?
 													"Online"
 												: event.format === "hybrid" ?
