@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import {
@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { Badge } from "./ui/badge";
 
 export function FeaturedCarousel({ events = [] }) {
+	const [selectedIndex, setSelectedIndex] = useState(0);
 	const [emblaRef, emblaApi] = useEmblaCarousel(
 		{ loop: true },
 		Autoplay({
@@ -23,16 +24,23 @@ export function FeaturedCarousel({ events = [] }) {
 			rootNode: (emblaRoot) => emblaRoot.parentElement,
 		}),
 	);
-	 const goToPrev = () => {
-    emblaApi?.scrollPrev();
-    emblaApi.plugins().autoplay.reset();
-  };
-  const goToNext = () => {
-    emblaApi?.scrollNext();
-    emblaApi.plugins().autoplay.reset();
-  };
+	const scrollTo = (i) => {
+		emblaApi.scrollTo(i);
+	};
+
+	const goToPrev = () => {
+		emblaApi?.scrollPrev();
+		emblaApi.plugins().autoplay.reset();
+	};
+	const goToNext = () => {
+		emblaApi?.scrollNext();
+		emblaApi.plugins().autoplay.reset();
+	};
 	useEffect(() => {
 		if (!emblaApi) return;
+		emblaApi.on("select", () =>
+			setSelectedIndex(emblaApi.selectedScrollSnap()),
+		);
 	}, [emblaApi]);
 
 	return (
@@ -151,6 +159,19 @@ export function FeaturedCarousel({ events = [] }) {
 				className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/80 hover:bg-white text-stone-800 shadow-md flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 z-20 cursor-pointer backdrop-blur-sm">
 				<ChevronRight className="w-6 h-6" />
 			</button>
+			<div className="absolute bottom-4 right-6 flex items-center gap-2 z-20">
+				{events.map((_, i) => (
+					<button
+						key={i}
+						onClick={() => scrollTo(i)}
+						className={`transition-all rounded-full ${
+							i === selectedIndex ?
+								"w-6 h-2 bg-[#E65100]"
+							:	"w-2 h-2 bg-white/50 hover:bg-white/80"
+						}`}
+					/>
+				))}
+			</div>
 		</div>
 	);
 }

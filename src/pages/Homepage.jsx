@@ -6,25 +6,27 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function Home() {
-	 const [featuredEvents, setFeaturedEvents] = useState([]);
+	const [featuredEvents, setFeaturedEvents] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    async function getFeaturedEvents() {
-      setIsLoading(true)
-      try {
-        let {
-          data: { data },
-        } = await axios.get(
-          "https://eventsphere-server-mfdb.onrender.com/api/events/featured",
-        );
-        setFeaturedEvents(data);
-      } catch (error) {} finally {
-        setIsLoading(false)
-      }
-    }
-    getFeaturedEvents();
-  }, []);
+	useEffect(() => {
+		async function getFeaturedEvents() {
+			setIsLoading(true);
+			try {
+				let {
+					data: { data },
+				} = await axios.get(
+					"https://eventsphere-server-mfdb.onrender.com/api/events/featured",
+				);
+				setFeaturedEvents(data);
+			} catch (error) {
+				console.log(error);
+			} finally {
+				setIsLoading(false);
+			}
+		}
+		getFeaturedEvents();
+	}, []);
 
 	return (
 		<div className="space-y-16 pb-20">
@@ -83,7 +85,7 @@ export default function Home() {
 
 				{isLoading ?
 					<div className="aspect-21/9 rounded-3xl bg-[#EBE8DF]/50 animate-pulse"></div>
-				:	<FeaturedCarousel events={featuredEvents}/>}
+				:	<FeaturedCarousel events={featuredEvents} />}
 			</section>
 		</div>
 	);
