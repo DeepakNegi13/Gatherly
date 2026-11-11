@@ -17,12 +17,14 @@ export function FeaturedCarousel({ events = [] }) {
 	const [selectedIndex, setSelectedIndex] = useState(0);
 	const [emblaRef, emblaApi] = useEmblaCarousel(
 		{ loop: true },
-		Autoplay({
-			delay: 4000,
-			stopOnInteraction: false,
-			stopOnMouseEnter: true,
-			rootNode: (emblaRoot) => emblaRoot.parentElement,
-		}),
+		[
+			Autoplay({
+				delay: 4000,
+				stopOnInteraction: false,
+				stopOnMouseEnter: true,
+				rootNode: (emblaRoot) => emblaRoot.parentElement,
+			}),
+		],
 	);
 	const scrollTo = (i) => {
 		emblaApi.scrollTo(i);
@@ -30,11 +32,11 @@ export function FeaturedCarousel({ events = [] }) {
 
 	const goToPrev = () => {
 		emblaApi?.scrollPrev();
-		emblaApi.plugins().autoplay.reset();
+		emblaApi?.plugins().autoplay?.reset();
 	};
 	const goToNext = () => {
 		emblaApi?.scrollNext();
-		emblaApi.plugins().autoplay.reset();
+		emblaApi?.plugins().autoplay?.reset();
 	};
 	useEffect(() => {
 		if (!emblaApi) return;
