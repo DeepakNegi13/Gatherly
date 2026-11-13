@@ -44,8 +44,7 @@ export function FeaturedCarousel({ events = [] }) {
             return (
               <div
                 key={eventId}
-                className="flex-[0_0_100%] min-w-0 relative aspect-4/5 sm:aspect-video md:aspect-21/9 lg:aspect-24/9 max-h-125"
-              >
+                className="flex-[0_0_100%] min-w-0 relative aspect-4/5 sm:aspect-video md:aspect-21/9 lg:aspect-24/9 max-h-125">
                 {/* Background Image with warm rich gradient overlay */}
                 <div className="absolute inset-0 bg-[#161513]">
                   <img
@@ -73,8 +72,7 @@ export function FeaturedCarousel({ events = [] }) {
                         <Badge
                           variant="outline"
                           size="sm"
-                          className="text-stone-200 border-white/20 bg-white/10 backdrop-blur-sm px-2 py-3"
-                        >
+                          className="text-stone-200 border-white/20 bg-white/10 backdrop-blur-sm px-2 py-3">
                           {event.category.name}
                         </Badge>
                       )}
@@ -91,8 +89,7 @@ export function FeaturedCarousel({ events = [] }) {
                     <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
                       <Link
                         to={`/events/${event.slug || eventId}`}
-                        className="hover:underline hover:pointer underline-offset-4 decoration-[#E65100]"
-                      >
+                        className="hover:underline hover:pointer underline-offset-4 decoration-[#E65100]">
                         {event.title}
                       </Link>
                     </h2>
@@ -123,8 +120,7 @@ export function FeaturedCarousel({ events = [] }) {
                         <Button
                           variant="primary"
                           size="md"
-                          className="gap-2 shadow-lg flex items-center flex-row justify-center"
-                        >
+                          className="gap-2 shadow-lg flex items-center flex-row justify-center">
                           <ArrowRight className="w-4 h-4" />
                           <span className="text-ink-50">Explore Experience</span>
                         </Button>
@@ -134,8 +130,7 @@ export function FeaturedCarousel({ events = [] }) {
                         <Button
                           variant="secondary"
                           size="md"
-                          className="bg-white/20 border-white/30 text-ink-50 hover:bg-white/30 backdrop-blur-sm p-1.5 rounded-2xl"
-                        >
+                          className="bg-white/20 border-white/30 text-ink-50 hover:bg-white/30 backdrop-blur-sm p-1.5 rounded-2xl">
                           Quick Register
                         </Button>
                       }
@@ -151,16 +146,14 @@ export function FeaturedCarousel({ events = [] }) {
       <button
         onClick={goToPrev}
         aria-label="Previous slide"
-        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/80 hover:bg-white text-stone-800 shadow-md flex items-center justify-center transition-all opacity-100 sm:opacity-0 sm:group-hover:opacity-100 z-20 cursor-pointer backdrop-blur-sm"
-      >
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/80 hover:bg-white text-stone-800 shadow-md flex items-center justify-center transition-all opacity-100 sm:opacity-0 sm:group-hover:opacity-100 z-20 cursor-pointer backdrop-blur-sm">
         <ChevronLeft className="w-6 h-6" />{" "}
       </button>
       {/* right arrow button */}
       <button
         onClick={goToNext}
         aria-label="Next slide"
-        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/80 hover:bg-white text-stone-800 shadow-md flex items-center justify-center transition-all opacity-100 sm:opacity-0 sm:group-hover:opacity-100 z-20 cursor-pointer backdrop-blur-sm"
-      >
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/80 hover:bg-white text-stone-800 shadow-md flex items-center justify-center transition-all opacity-100 sm:opacity-0 sm:group-hover:opacity-100 z-20 cursor-pointer backdrop-blur-sm">
         <ChevronRight className="w-6 h-6" />
       </button>
       {/* dots for changing the image from any index  */}
