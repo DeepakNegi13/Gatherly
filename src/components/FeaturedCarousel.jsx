@@ -7,7 +7,7 @@ import { ArrowRight, Calendar, ChevronLeft, ChevronRight, MapPin, Sparkles } fro
 import { Button } from "@base-ui/react/button"
 import { Link } from "react-router-dom"
 import { Badge } from "./ui/badge"
-import {formatPrice} from "../lib/utils"
+import { formatPrice, formatEventDate } from "../lib/utils"
 
 export function FeaturedCarousel({ events = [] }) {
     console.log(events)
@@ -63,7 +63,7 @@ export function FeaturedCarousel({ events = [] }) {
                                 {/* Content Overlay */}
                                 <div className="relative h-full flex flex-col justify-end p-6 sm:p-10 lg:p-12 text-white max-w-3xl z-10">
                                     {/* content section */}
-                                    <div className="space-y-3">
+                                    <div className="space-y-3 w-fit m-auto">
                                         {/* upper hero article  */}
                                         <div className="flex items-center gap-2 flex-wrap">
                                             {/* hero button */}
@@ -104,8 +104,7 @@ export function FeaturedCarousel({ events = [] }) {
                                         <div className="flex items-center gap-5 pt-2 text-xs sm:text-sm text-stone-300 font-medium flex-wrap">
                                             <span className="flex items-center gap-1.5 text-orange-300 font-semibold">
                                                 <Calendar className="w-4 h-4" />
-                                                {/* {formatEventDate(event.startDate)} */}
-                                                {event.startDate}
+                                                {formatEventDate(event.startDate)}
                                             </span>
                                             <span className="flex items-center gap-1.5 text-stone-300">
                                                 <MapPin className="w-4 h-4 text-stone-400" />
@@ -113,7 +112,6 @@ export function FeaturedCarousel({ events = [] }) {
                                             </span>
                                             <span className="flex items-center gap-1.5 font-bold text-white bg-white/10 px-2.5 py-1 rounded-lg border border-white/10">
                                                 {formatPrice(event.price, event.currency)}
-                                              
                                             </span>
                                         </div>
                                         {/* buttons */}

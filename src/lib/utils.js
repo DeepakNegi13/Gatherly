@@ -1,7 +1,11 @@
 export { cn } from "cn"
-export function formatPrice(price,currency="INR") {
+import { format, parseISO } from "date-fns";
+export function formatPrice(price, currency = "INR") {
     const val = Number(price)
-    if(!val) return "FREE"
-    else return val+" "+currency;
- 
+    if (!val) return "FREE"
+    return new Intl.NumberFormat("en-IN", { style: "currency", currency, maximumFractionDigits: 0 }).format(val)
+}
+export function formatEventDate(dateInput) {
+    const date = parseISO(dateInput);
+  return format(date , "E, LLL dd, yyyy");
 }
