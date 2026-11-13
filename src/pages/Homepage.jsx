@@ -28,11 +28,12 @@ function getCategoryColor(i) {
   return colors[i % colors.length]
 }
 export default function Home() {
+  // all usestate element
   const [featuredEvents, setFeaturedEvents] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-
   const [category, setCategory] = useState([])
 
+  // fetching data from api
   useEffect(() => {
     async function getFeaturedEvents() {
       setIsLoading(true)
@@ -67,7 +68,8 @@ export default function Home() {
 
   return (
     <div className="space-y-16 pb-20">
-      <section className="relative pt-12 pb-6 sm:pt-16 sm:pb-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Hero section */}
+      <section id="Hero" className="relative pt-12 pb-6 sm:pt-16 sm:pb-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-start  justify-between gap-8 pb-10 border-b border-[#EBE8DF]">
           <div className="max-w-2xl space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-100/70 text-[#C2410C] border border-orange-200">
@@ -96,7 +98,8 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Carouasal section */}
+      <section id="Carousal" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between pb-4">
           <div className="flex items-center gap-2">
             <Flame className="w-5 h-5 text-[#E65100]" />
@@ -111,9 +114,8 @@ export default function Home() {
           <div className="aspect-21/9 rounded-3xl bg-[#EBE8DF]/50 animate-pulse"></div>
         : <FeaturedCarousel events={featuredEvents} />}
       </section>
-
       {/* Category Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
+      <section id="Category" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
         {/* HEADINGS of the section */}
         <div>
           <h2 className="text-xl font-bold text-stone-900 tracking-tight">Browse by Discipline</h2>
@@ -132,11 +134,11 @@ export default function Home() {
             ))}
           </div>
         : <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5">
-            {category.map((event,id) => {
+            {category.map((event, id) => {
               const icon = event?.icon
 
-							//color is a object
-							const color = getCategoryColor(id)
+              //color is a object
+              const color = getCategoryColor(id)
               return (
                 // category
                 <Link
@@ -156,6 +158,32 @@ export default function Home() {
             })}
           </div>
         }
+      </section>
+      {/* organizer callout banner */}
+      <section id="Banner" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-[#1C1B18] text-white rounded-3xl p-8 sm:p-12 border border-[#33312B] flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="max-w-xl space-y-3">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#FF8A65]">Empowering Community Hosts</span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">Host your next summit, workshop or indie showcase on EventSphere.</h2>
+            <p className="text-sm text-stone-300 leading-relaxed">
+              Every registered user can organize events. Enjoy seamless ticketing, automatic calendar syncing, verified attendee reviews, and real-time
+              dashboard analytics.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
+            <Link
+              to="/create-event"
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold px-5 py-2.5 text-base rounded-xl bg-[#E65100] text-white hover:bg-[#D84315] w-full sm:w-auto shadow-lg">
+              Create Event Now
+            </Link>
+            <Link
+              to="/profile"
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold px-5 py-2.5 text-base rounded-xl w-full sm:w-auto bg-white/10 text-white border border-white/20 hover:bg-white/20">
+              Organizer Portal
+            </Link>
+          </div>
+        </div>
       </section>
     </div>
   )
