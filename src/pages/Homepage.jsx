@@ -1,7 +1,7 @@
 import { FeaturedCarousel } from "#components/FeaturedCarousel"
 import { useEffect, useState } from "react"
 import { Button } from "../components/ui/Button"
-import { BriefcaseBusiness, ChevronRight, Compass, CpuAi, Flame, GraduationCapIcon, Music4, Palette, TagIcon, Trophy } from "lucide-react"
+import { BriefcaseBusiness, ChevronRight, Compass, CpuAi, Flame, GraduationCapIcon, Music4, Palette, Sparkles, TagIcon, Trophy } from "lucide-react"
 import { Link } from "react-router-dom"
 import axios from "axios"
 
@@ -108,30 +108,41 @@ export default function Home() {
           <h2 className="text-xl font-bold text-stone-900 tracking-tight">Browse by Discipline</h2>
           <p className="text-xs text-stone-500">Curated tracks dynamically fetched from our active community listings</p>
         </div>
-
-        {/* Category Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5">
-          {category.map(event => {
-            const icon = event?.icon
-
-            return (
-              // category
-              <Link
-                key={event._id}
-                to="/explore"
-                className="p-4 rounded-2xl bg-white border border-[#EBE8DF] hover:border-[#D5D0C2] hover:shadow-subtle transition-all duration-200 group flex flex-col justify-between">
-                <div className="w-10 h-10 rounded-xl border flex items-center justify-center mb-3 transition-all duration-200 bg-orange-50 text-[#E65100] border-orange-200 group-hover:bg-[#E65100] group-hover:text-white text-lg">
-                  {eventIcon(icon)}
+        {isLoading ?
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="p-4 rounded-2xl bg-white border border-[#EBE8DF] animate-pulse space-y-3">
+                <div className="w-9 h-9 rounded-xl bg-stone-100" />
+                <div className="space-y-1.5">
+                  <div className="h-3.5 bg-stone-100 rounded w-3/4" />
+                  <div className="h-2.5 bg-stone-100 rounded w-1/2" />
                 </div>
-                {/* Event type and number of event */}
-                <div>
-                  <p className="text-xs font-bold text-stone-900 leading-snug group-hover:text-[#E65100] transition-colors">{event.name}</p>
-                  <p className="text-[11px] text-stone-400 mt-0.5">{event.eventCount} Events</p>
-                </div>
-              </Link>
-            )
-          })}
-        </div>
+              </div>
+            ))}
+          </div>
+        : <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5">
+            {category.map(event => {
+              const icon = event?.icon
+
+              return (
+                // category
+                <Link
+                  key={event._id}
+                  to="/explore"
+                  className="p-4 rounded-2xl bg-white border border-[#EBE8DF] hover:border-[#D5D0C2] hover:shadow-subtle transition-all duration-200 group flex flex-col justify-between">
+                  <div className="w-10 h-10 rounded-xl border flex items-center justify-center mb-3 transition-all duration-200 bg-orange-50 text-[#E65100] border-orange-200 group-hover:bg-[#E65100] group-hover:text-white text-lg">
+                    {eventIcon(icon)}
+                  </div>
+                  {/* Event type and number of event */}
+                  <div>
+                    <p className="text-xs font-bold text-stone-900 leading-snug group-hover:text-[#E65100] transition-colors">{event.name}</p>
+                    <p className="text-[11px] text-stone-400 mt-0.5">{event.eventCount} Events</p>
+                  </div>
+                </Link>
+              )
+            })}
+          </div>
+        }
       </section>
     </div>
   )
