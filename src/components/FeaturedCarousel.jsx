@@ -8,7 +8,6 @@ import { Badge } from "./ui/badge"
 import { formatPrice, formatEventDate } from "../lib/utils"
 
 export function FeaturedCarousel({ events = [] }) {
-  console.log(events)
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({

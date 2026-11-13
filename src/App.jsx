@@ -1,21 +1,31 @@
-import { Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import NotFoundPage from "./pages/NotFoundPage";
+import { Route, Routes, useLocation } from "react-router-dom"
+import Navbar from "./components/Navbar"
+import Footer from "./components/Footer"
+import NotFoundPage from "./pages/NotFoundPage"
 import Homepage from "./pages/Homepage"
-const App = () => {
-	return (
-		<div className="min-h-screen flex flex-col bg-[#FAF9F5] text-stone-900 selection:bg-orange-100 selection:text-[#E65100]">
-			<Navbar />
-			<div className="flex-1">
-				<Routes>
-					<Route path="/" element={<Homepage/>} />
-					<Route path="*" element={<NotFoundPage />} />
-				</Routes>
-			</div>
-			<Footer />
-		</div>
-	);
-};
+import { useEffect } from "react"
 
-export default App;
+function ScrollToTop() {
+	const { pathname } = useLocation()
+  useEffect(()=>{
+		window.scrollTo({'top':0})
+    console.log(pathname)
+	},[pathname])
+}
+const App = () => {
+  return (
+    <div className="min-h-screen flex flex-col bg-[#FAF9F5] text-stone-900 selection:bg-orange-100 selection:text-[#E65100]">
+      <ScrollToTop />
+      <Navbar />
+      <div className="flex-1">
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </div>
+      <Footer />
+    </div>
+  )
+}
+
+export default App

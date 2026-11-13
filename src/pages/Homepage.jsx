@@ -17,6 +17,7 @@ export default function Home() {
           data: { data },
         } = await axios.get("https://eventsphere-server-mfdb.onrender.com/api/events/featured")
         setFeaturedEvents(data)
+				console.log(data)
       } catch (error) {
         console.log(error)
       } finally {
@@ -76,13 +77,14 @@ export default function Home() {
 
       {/* Category Grid */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
+				{/* HEADINGS of the section */}
         <div>
           <h2 className="text-xl font-bold text-stone-900 tracking-tight">Browse by Discipline</h2>
           <p className="text-xs text-stone-500">
             Curated tracks dynamically fetched from our active community listings
           </p>
         </div>
-
+				{/* Category Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5">
           {/* Category 1 */}
           <Link
@@ -92,6 +94,7 @@ export default function Home() {
             <div className="w-10 h-10 rounded-xl border flex items-center justify-center mb-3 transition-all duration-200 bg-orange-50 text-[#E65100] border-orange-200 group-hover:bg-[#E65100] group-hover:text-white text-lg">
               💻
             </div>
+						{/* Event type and number of event */}
             <div>
               <p className="text-xs font-bold text-stone-900 leading-snug group-hover:text-[#E65100] transition-colors">
                 Technology & AI
