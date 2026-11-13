@@ -47,7 +47,7 @@ export function FeaturedCarousel({ events = [] }) {
                         return (
                             <div
                                 key={eventId}
-                                className="flex-[0_0_100%] min-w-0 relative aspect-video md:aspect-21/9 lg:aspect-24/9 max-h-125">
+                                className="flex-[0_0_100%] min-w-0 relative aspect-4/5 sm:aspect-video md:aspect-21/9 lg:aspect-24/9 max-h-125">
                                 {/* Background Image with warm rich gradient overlay */}
                                 <div className="absolute inset-0 bg-[#161513]">
                                     <img
@@ -61,13 +61,13 @@ export function FeaturedCarousel({ events = [] }) {
                                 </div>
 
                                 {/* Content Overlay */}
-                                <div className="relative h-full flex flex-col justify-end p-6 sm:p-10 lg:p-12 text-white max-w-3xl z-10">
+                                <div className="relative h-full flex flex-col justify-end p-4 sm:p-10 lg:p-12 text-white z-10">
                                     {/* content section */}
-                                    <div className="space-y-3 w-fit m-auto">
+                                    <div className="space-y-2 sm:space-y-3 w-full max-w-3xl my-auto">
                                         {/* upper hero article  */}
                                         <div className="flex items-center gap-2 flex-wrap">
                                             {/* hero button */}
-                                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-[#E65100] text-white shadow-sm">
+                                            <span className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-[#E65100] text-white shadow-sm">
                                                 <Sparkles className="w-3.5 h-3.5" /> Featured Spotlight
                                             </span>
                                             {/* event name button */}
@@ -89,7 +89,7 @@ export function FeaturedCarousel({ events = [] }) {
                                             </Badge>
                                         </div>
                                         {/* main event name */}
-                                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
+                                        <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
                                             <Link
                                                 to={`/events/${event.slug || eventId}`}
                                                 className="hover:underline hover:pointer underline-offset-4 decoration-[#E65100]">
@@ -97,25 +97,25 @@ export function FeaturedCarousel({ events = [] }) {
                                             </Link>
                                         </h2>
                                         {/* Event description */}
-                                        <p className="text-sm sm:text-base hover:underline underline-offset-4 text-stone-300 line-clamp-2 max-w-2xl font-normal leading-relaxed">
+                                        <p className="text-xs sm:text-base hover:underline underline-offset-4 text-stone-300 line-clamp-2 max-w-2xl font-normal leading-relaxed">
                                             {event.description}
                                         </p>
                                         {/* date and place */}
-                                        <div className="flex items-center gap-5 pt-2 text-xs sm:text-sm text-stone-300 font-medium flex-wrap">
+                                        <div className="flex items-center gap-x-4 gap-y-2 pt-2 text-xs sm:text-sm text-stone-300 font-medium flex-wrap">
                                             <span className="flex items-center gap-1.5 text-orange-300 font-semibold">
                                                 <Calendar className="w-4 h-4" />
                                                 {formatEventDate(event.startDate)}
                                             </span>
-                                            <span className="flex items-center gap-1.5 text-stone-300">
+                                            <span className="flex items-center gap-1.5 text-stone-300 min-w-0 max-w-full">
                                                 <MapPin className="w-4 h-4 text-stone-400" />
-                                                {event.venue}, {event.city}
+                                                <span className="truncate">{event.venue}, {event.city}</span>
                                             </span>
                                             <span className="flex items-center gap-1.5 font-bold text-white bg-white/10 px-2.5 py-1 rounded-lg border border-white/10">
                                                 {formatPrice(event.price, event.currency)}
                                             </span>
                                         </div>
                                         {/* buttons */}
-                                        <div className="pt-3 flex items-center gap-3">
+                                        <div className="pt-2 sm:pt-3 flex items-center gap-2 sm:gap-3 flex-wrap">
                                             {/* arrow button and first link */}
                                             <Link to={`/events/${event.slug || eventId}`}>
                                                 <Button
@@ -147,18 +147,18 @@ export function FeaturedCarousel({ events = [] }) {
             <button
                 onClick={goToPrev}
                 aria-label="Previous slide"
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/80 hover:bg-white text-stone-800 shadow-md flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 z-20 cursor-pointer backdrop-blur-sm">
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/80 hover:bg-white text-stone-800 shadow-md flex items-center justify-center transition-all opacity-100 sm:opacity-0 sm:group-hover:opacity-100 z-20 cursor-pointer backdrop-blur-sm">
                 <ChevronLeft className="w-6 h-6" />{" "}
             </button>
             {/* right arrow button */}
             <button
                 onClick={goToNext}
                 aria-label="Next slide"
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/80 hover:bg-white text-stone-800 shadow-md flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 z-20 cursor-pointer backdrop-blur-sm">
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/80 hover:bg-white text-stone-800 shadow-md flex items-center justify-center transition-all opacity-100 sm:opacity-0 sm:group-hover:opacity-100 z-20 cursor-pointer backdrop-blur-sm">
                 <ChevronRight className="w-6 h-6" />
             </button>
             {/* dots for changing the image from any index  */}
-            <div className="absolute bottom-4 right-6 flex items-center gap-2 z-20">
+            <div className="absolute bottom-3 right-4 sm:bottom-4 sm:right-6 flex items-center gap-2 z-20">
                 {events.map((_, i) => (
                     <button
                         key={i}
