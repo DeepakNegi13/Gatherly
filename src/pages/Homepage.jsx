@@ -15,7 +15,18 @@ function eventIcon(iconName) {
   if (iconName === "cpu") return <CpuAi />
   return <TagIcon />
 }
+function getCategoryColor(i) {
+  const colors = [
+    { icon: "bg-orange-50 text-[#E65100] border-orange-200 group-hover:bg-[#E65100] group-hover:text-white", text: "group-hover:text-[#E65100]" },
+    { icon: "bg-blue-50 text-blue-700 border-blue-200 group-hover:bg-blue-600 group-hover:text-white", text: "group-hover:text-blue-600" },
+    { icon: "bg-emerald-50 text-emerald-700 border-emerald-200 group-hover:bg-emerald-600 group-hover:text-white", text: "group-hover:text-emerald-600" },
+    { icon: "bg-purple-50 text-purple-700 border-purple-200 group-hover:bg-purple-600 group-hover:text-white", text: "group-hover:text-purple-600" },
+    { icon: "bg-rose-50 text-rose-700 border-rose-200 group-hover:bg-rose-600 group-hover:text-white", text: "group-hover:text-rose-600" },
+    { icon: "bg-amber-50 text-amber-700 border-amber-200 group-hover:bg-amber-600 group-hover:text-white", text: "group-hover:text-amber-600" },
+  ]
 
+  return colors[i % colors.length]
+}
 export default function Home() {
   const [featuredEvents, setFeaturedEvents] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -121,21 +132,23 @@ export default function Home() {
             ))}
           </div>
         : <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5">
-            {category.map(event => {
+            {category.map((event,id) => {
               const icon = event?.icon
 
+							//color is a object
+							const color = getCategoryColor(id)
               return (
                 // category
                 <Link
                   key={event._id}
                   to="/explore"
                   className="p-4 rounded-2xl bg-white border border-[#EBE8DF] hover:border-[#D5D0C2] hover:shadow-subtle transition-all duration-200 group flex flex-col justify-between">
-                  <div className="w-10 h-10 rounded-xl border flex items-center justify-center mb-3 transition-all duration-200 bg-orange-50 text-[#E65100] border-orange-200 group-hover:bg-[#E65100] group-hover:text-white text-lg">
+                  <div className={`w-10 h-10 rounded-xl border flex items-center justify-center mb-3 transition-all duration-200  text-lg ${color.icon}`}>
                     {eventIcon(icon)}
                   </div>
                   {/* Event type and number of event */}
                   <div>
-                    <p className="text-xs font-bold text-stone-900 leading-snug group-hover:text-[#E65100] transition-colors">{event.name}</p>
+                    <p className={`text-xs font-boldleading-snug transition-colors ${color.text}`}>{event.name}</p>
                     <p className="text-[11px] text-stone-400 mt-0.5">{event.eventCount} Events</p>
                   </div>
                 </Link>
