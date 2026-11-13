@@ -7,8 +7,10 @@ import { ArrowRight, Calendar, ChevronLeft, ChevronRight, MapPin, Sparkles } fro
 import { Button } from "@base-ui/react/button"
 import { Link } from "react-router-dom"
 import { Badge } from "./ui/badge"
+import {formatPrice} from "../lib/utils"
 
 export function FeaturedCarousel({ events = [] }) {
+    console.log(events)
     const [selectedIndex, setSelectedIndex] = useState(0)
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
         Autoplay({
@@ -110,8 +112,8 @@ export function FeaturedCarousel({ events = [] }) {
                                                 {event.venue}, {event.city}
                                             </span>
                                             <span className="flex items-center gap-1.5 font-bold text-white bg-white/10 px-2.5 py-1 rounded-lg border border-white/10">
-                                                {/* {formatPrice(event.price, event.currency)} */}
-                                                {event.price}
+                                                {formatPrice(event.price, event.currency)}
+                                              
                                             </span>
                                         </div>
                                         {/* buttons */}
