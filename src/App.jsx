@@ -4,13 +4,12 @@ import Footer from "./components/Footer"
 import NotFoundPage from "./pages/NotFoundPage"
 import Homepage from "./pages/Homepage"
 import { useEffect } from "react"
-
+// after go to next url the screen is scroll to top
 function ScrollToTop() {
-	const { pathname } = useLocation()
-  useEffect(()=>{
-		window.scrollTo({'top':0})
-    console.log(pathname)
-	},[pathname])
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo({ top: 0 })
+  }, [pathname])
 }
 const App = () => {
   return (
