@@ -1,8 +1,10 @@
+import { formatEventDate } from "#lib/utils"
 import axios from "axios"
+import { Calendar, Clock, Clock2Icon, Sparkles } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router"
 export default function EventDetailsPage() {
-  const [eventDetail, setEventDetail] = useState({})
+  const [event, setEvent] = useState({})
   const { id } = useParams()
   useEffect(() => {
     async function GetEventDetail() {
@@ -11,7 +13,7 @@ export default function EventDetailsPage() {
           data: { data },
         } = await axios.get(`https://eventsphere-server-mfdb.onrender.com/api/events/${id}`)
 
-        setEventDetail(data)
+        setEvent(data)
       } catch (err) {
         console.error(err)
       }
@@ -21,7 +23,7 @@ export default function EventDetailsPage() {
     }
   }, [id])
   {
-    console.log(eventDetail)
+    console.log(event)
   }
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 pb-24">
@@ -51,11 +53,7 @@ export default function EventDetailsPage() {
 
       {/* Hero Banner Image */}
       <div className="relative rounded-3xl overflow-hidden aspect-16/8 max-h-115 shadow-subtle border border-[#EBE8DF]">
-        <img
-          src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1600&q=80"
-          alt="Next-Gen React & Server Components Summit"
-          className="w-full h-full object-cover"
-        />
+        <img src={event.image} alt="Next-Gen React & Server Components Summit" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent" />
 
         <div className="absolute bottom-6 left-6 right-6 text-white space-y-2">
@@ -67,20 +65,19 @@ export default function EventDetailsPage() {
               In-Person Gathering
             </span>
             <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-[#FFF3E0] text-[#B73E00] border border-[#FFE0B2] text-xs px-2.5 py-1 rounded-full font-medium">
-              <span>✨</span> Featured Pick
+              <Sparkles /> Featured Pick
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">Next-Gen React & Server Components Summit</h1>
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">{event.title}</h1>
 
           <div className="flex items-center gap-4 text-xs sm:text-sm text-stone-200 pt-1 flex-wrap font-medium">
             <span className="flex items-center gap-1 text-orange-300 font-semibold">
-              <span>📅</span> Sat, Nov 15, 2026
+              <Calendar />
             </span>
             <span>•</span>
             <span className="flex items-center gap-1">
-              <span>🕒</span> 09:30 AM – 06:00 PM IST
-            </span>
+             <Clock2Icon/>09:30 AM – 06:00 PM IST          </span>
             <span>•</span>
             <span className="flex items-center gap-1">
               <span>📍</span> Bangalore International Centre, Domlur, Bengaluru
