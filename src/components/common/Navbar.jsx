@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { GatherlyLogo } from "../assets/icons/GatherlyLogo"
-import { Button } from "./ui/button"
+import { GatherlyLogo } from "../../assets/icons/GatherlyLogo"
+import { Button } from "../ui/button"
 import { Bookmark, Calendar, Compass, Menu, PlusCircle, Search, User, X } from "lucide-react"
 import { Link } from "react-router"
 
@@ -14,10 +14,7 @@ function Navbar() {
         </Link>
         <div className="flex items-center gap-2.5">
           <Search className="md:hidden text-stone-600" />
-          <button
-            onClick={() => setIsMobileMenuOpen(prev => !prev)}
-            className="md:hidden p-2 rounded-xl text-stone-700 hover:bg-black/5"
-          >
+          <button onClick={() => setIsMobileMenuOpen(prev => !prev)} className="md:hidden p-2 rounded-xl text-stone-700 hover:bg-black/5">
             {isMobileMenuOpen ?
               <X className="w-6 h-6" />
             : <Menu className="w-6 h-6" />}
@@ -35,46 +32,31 @@ function Navbar() {
               </form>
 
               <div className="flex flex-col gap-1">
-                <Link
-                  to="/explore"
-                  className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-stone-800 hover:bg-black/5"
-                >
+                <Link to="/explore" className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-stone-800 hover:bg-black/5">
                   <div className="flex items-center gap-3">
                     <Compass className="w-4 h-4 text-stone-500" /> Explore Events
                   </div>
                 </Link>
 
-                <Link
-                  to="/schedule"
-                  className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-stone-800 hover:bg-black/5"
-                >
+                <Link to="/schedule" className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-stone-800 hover:bg-black/5">
                   <div className="flex items-center gap-3">
                     <Calendar className="w-4 h-4 text-stone-500" /> My Schedule
                   </div>
                 </Link>
 
-                <Link
-                  to="/favorites"
-                  className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-stone-800 hover:bg-black/5"
-                >
+                <Link to="/favorites" className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-stone-800 hover:bg-black/5">
                   <div className="flex items-center gap-3">
                     <Bookmark className="w-4 h-4 text-stone-500" /> Saved Events
                   </div>
                 </Link>
 
-                <Link
-                  to="/profile"
-                  className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-stone-800 hover:bg-black/5"
-                >
+                <Link to="/profile" className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-stone-800 hover:bg-black/5">
                   <div className="flex items-center gap-3">
                     <User className="w-4 h-4 text-stone-500" /> Member Profile
                   </div>
                 </Link>
 
-                <Link
-                  to="/create-event"
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#E65100] hover:bg-orange-50"
-                >
+                <Link to="/create-event" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[#E65100] hover:bg-orange-50">
                   <PlusCircle className="w-4 h-4" /> Host an Event
                 </Link>
               </div>
@@ -89,32 +71,28 @@ function Navbar() {
           <div className="hidden md:flex items-center gap-1">
             <Link
               to="/explore"
-              className="px-3.5 py-2 text-sm font-medium rounded-xl transition-colors inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 hover:bg-black/3"
-            >
+              className="px-3.5 py-2 text-sm font-medium rounded-xl transition-colors inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 hover:bg-black/3">
               <Compass className="w-4 h-4" />
               <span>Explore</span>
             </Link>
 
             <Link
               to="/schedule"
-              className="px-3.5 py-2 text-sm font-medium rounded-xl transition-colors inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 hover:bg-black/3"
-            >
+              className="px-3.5 py-2 text-sm font-medium rounded-xl transition-colors inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 hover:bg-black/3">
               <Calendar className="w-4 h-4" />
               <span>Schedule</span>
             </Link>
 
             <Link
               to="/favorites"
-              className="px-3.5 py-2 text-sm font-medium rounded-xl transition-colors inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 hover:bg-black/3"
-            >
+              className="px-3.5 py-2 text-sm font-medium rounded-xl transition-colors inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 hover:bg-black/3">
               <Bookmark className="w-4 h-4" />
               <span>Saved</span>
             </Link>
 
             <Link
               to="/profile"
-              className="px-3.5 py-2 text-sm font-medium rounded-xl transition-colors inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 hover:bg-black/3"
-            >
+              className="px-3.5 py-2 text-sm font-medium rounded-xl transition-colors inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 hover:bg-black/3">
               <User className="w-4 h-4" />
               <span>Profile</span>
             </Link>
@@ -130,12 +108,7 @@ function Navbar() {
             </form>
           </div>
           <div className="hidden md:flex items-center gap-3">
-            <Button
-              asChild
-              variant="outline"
-              size="sm"
-              className="border-dashed hover:border-[#E65100] hover:text-[#E65100] "
-            >
+            <Button asChild variant="outline" size="sm" className="border-dashed hover:border-[#E65100] hover:text-[#E65100] ">
               <Link to="/create-event" className="flex gap-1">
                 <PlusCircle className="w-4 h-4" />
                 <span>Host Event</span>

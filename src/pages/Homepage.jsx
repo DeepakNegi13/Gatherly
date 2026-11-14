@@ -1,10 +1,10 @@
-import { FeaturedCarousel } from "#components/FeaturedCarousel"
+import { FeaturedCarousel } from "#components/events/FeaturedCarousel"
 import { useEffect, useState } from "react"
 import { Button } from "../components/ui/Button"
 import { BriefcaseBusiness, ChevronRight, Compass, CpuAi, Flame, GraduationCapIcon, MapPin, Music4, Palette, Sparkles, TagIcon, Trophy } from "lucide-react"
 import { Link } from "react-router-dom"
 import axios from "axios"
-import { formatPrice } from "#lib/utils"
+import EventCard from "#components/events/EventCard"
 const hubCities = [
   { Url: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=500&q=80", name: "Bengaluru" },
   { Url: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=500&q=80", name: "Mumbai" },
@@ -40,7 +40,7 @@ export default function Home() {
   const [featuredEvents, setFeaturedEvents] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [category, setCategory] = useState([])
-	const [upcomingEvents,setUpcomingEvents] = useState([]);
+  const [upcomingEvents, setUpcomingEvents] = useState([])
 
   // fetching data from api
   useEffect(() => {
@@ -70,12 +70,12 @@ export default function Home() {
         setIsLoading(false)
       }
     }
-		async function getUpcomingEvent() {
+    async function getUpcomingEvent() {
       setIsLoading(true)
       try {
         let {
           data: { data },
-        } = await axios.get("https://eventsphere-server-mfdb.onrender.com/api/events")
+        } = await axios.get("https://eventsphere-server-mfdb.onrender.com/api/events?limit=16&sort=startDate&order=asc")
         setUpcomingEvents(data)
         console.log(data)
       } catch (error) {
@@ -185,14 +185,14 @@ export default function Home() {
 
       {/* Upcoming Gatherings Grid */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-				{/* top header bar of the section */}
+        {/* top header bar of the section */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#EBE8DF]">
-					{/* top header bar of the section */}
+          {/* top header bar of the section */}
           <div>
             <h2 className="text-xl sm:text-2xl font-bold text-stone-900 tracking-tight">Upcoming Gatherings</h2>
             <p className="text-xs text-stone-500">Verified community events happening in the coming days</p>
           </div>
-					{/* explore event button */}
+          {/* explore event button */}
           <Link
             to="/explore"
             className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap px-3 py-1.5 text-xs rounded-lg font-medium border border-[#CCC8BA] bg-transparent hover:bg-[#F2F1EC] text-[#222]">
@@ -202,52 +202,11 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-					{upcomingEvents.map(event=>{
-						return (
-              // card
-              <Link
-                key={event._id}
-                to="/events/next-gen-react-summit"
-                className="group bg-white rounded-2xl border border-[#EAE7DC] overflow-hidden flex flex-col justify-between shadow-[0_2px_8px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_24px_-8px_rgba(0,0,0,0.08)] hover:border-[#D5D0C2] hover:-translate-y-0.5 transition-all duration-300">
-                <div>
-                  <div className="relative aspect-16/10 overflow-hidden bg-stone-100">
-                    <img
-                      src={event.image}
-                      alt="Next-Gen React & Server Components Summit"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    />
-                    <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-                      <span className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-black/70 text-white backdrop-blur-md shadow-sm">
-                        Technology & AI
-                      </span>
-                      <button
-                        type="button"
-                        className="pointer-events-auto w-8 h-8 rounded-full bg-white/90 backdrop-blur-md shadow-sm border border-black/5 flex items-center justify-center text-stone-700 text-xs">
-                        <span>🔖</span>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="p-4 space-y-2">
-                    <div className="flex items-center gap-2 text-xs font-semibold text-[#C2410C]">
-                      <span>📅</span>
-                      <span>Sat, Nov 15, 2026</span>
-                      <span className="text-stone-300 font-normal">•</span>
-                      <span className="text-stone-500 font-normal truncate">{event.city}</span>
-                    </div>
-                    <h3 className="font-bold text-base text-[#111] leading-snug line-clamp-2 group-hover:text-[#E65100] transition-colors">{event.title}</h3>
-                  </div>
-                </div>
-
-                <div className="px-4 pb-4 pt-3 border-t border-[#F2EFE8] flex items-center justify-between text-xs mt-1">
-                  <span className="capitalize text-stone-500 font-medium">{event.format}</span>
-                  <span className="text-sm font-bold text-stone-900">{formatPrice(event.price, event.currency)}</span>
-                </div>
-              </Link>
-            )
-					})}
+          {upcomingEvents.map(event => {
+            return <EventCard event={event} />
+          })}
         </div>
-			</section>
+      </section>
       {/* City Hubs Spotlight */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
         {/* top heading */}

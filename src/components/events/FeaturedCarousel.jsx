@@ -4,18 +4,13 @@ import Autoplay from "embla-carousel-autoplay"
 import { ArrowRight, Calendar, ChevronLeft, ChevronRight, MapPin, Sparkles } from "lucide-react"
 import { Button } from "@base-ui/react/button"
 import { Link } from "react-router-dom"
-import { Badge } from "./ui/badge"
-import { formatPrice, formatEventDate } from "../lib/utils"
+import { Badge } from "../ui/badge"
+import { formatPrice, formatEventDate } from "../../lib/utils"
 
 export function FeaturedCarousel({ events = [] }) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
-    Autoplay({
-      delay: 4000,
-      stopOnInteraction: false,
-      stopOnMouseEnter: true,
-      rootNode: emblaRoot => emblaRoot.parentElement,
-    }),
+    Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true, rootNode: emblaRoot => emblaRoot.parentElement }),
   ])
   const scrollTo = i => {
     emblaApi.scrollTo(i)
@@ -42,16 +37,10 @@ export function FeaturedCarousel({ events = [] }) {
           {events.map(event => {
             const eventId = event._id || event.id
             return (
-              <div
-                key={eventId}
-                className="flex-[0_0_100%] min-w-0 relative aspect-4/5 sm:aspect-video md:aspect-21/9 lg:aspect-24/9 max-h-125">
+              <div key={eventId} className="flex-[0_0_100%] min-w-0 relative aspect-4/5 sm:aspect-video md:aspect-21/9 lg:aspect-24/9 max-h-125">
                 {/* Background Image with warm rich gradient overlay */}
                 <div className="absolute inset-0 bg-[#161513]">
-                  <img
-                    src={event.image}
-                    alt={event.title}
-                    className="w-full h-full object-cover opacity-60 mix-blend-luminosity filter brightness-95"
-                  />
+                  <img src={event.image} alt={event.title} className="w-full h-full object-cover opacity-60 mix-blend-luminosity filter brightness-95" />
                   {/* Subtle editorial warm gradient */}
                   <div className="absolute inset-0 bg-linear-to-t from-[#141312] via-[#141312]/60 to-transparent" />
                   <div className="absolute inset-0 bg-linear-to-r from-[#141312] via-[#141312]/80 to-transparent" />
@@ -69,10 +58,7 @@ export function FeaturedCarousel({ events = [] }) {
                       </span>
                       {/* event name button */}
                       {event.category?.name && (
-                        <Badge
-                          variant="outline"
-                          size="sm"
-                          className="text-stone-200 border-white/20 bg-white/10 backdrop-blur-sm px-2 py-3">
+                        <Badge variant="outline" size="sm" className="text-stone-200 border-white/20 bg-white/10 backdrop-blur-sm px-2 py-3">
                           {event.category.name}
                         </Badge>
                       )}
@@ -87,9 +73,7 @@ export function FeaturedCarousel({ events = [] }) {
                     </div>
                     {/* main event name */}
                     <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
-                      <Link
-                        to={`/events/${event.slug || eventId}`}
-                        className="hover:underline hover:pointer underline-offset-4 decoration-[#E65100]">
+                      <Link to={`/events/${event.slug || eventId}`} className="hover:underline hover:pointer underline-offset-4 decoration-[#E65100]">
                         {event.title}
                       </Link>
                     </h2>
@@ -117,10 +101,7 @@ export function FeaturedCarousel({ events = [] }) {
                     <div className="pt-2 sm:pt-3 flex items-center gap-2 sm:gap-3 flex-wrap">
                       {/* arrow button and first link */}
                       <Link to={`/events/${event.slug || eventId}`}>
-                        <Button
-                          variant="primary"
-                          size="md"
-                          className="gap-2 shadow-lg flex items-center flex-row justify-center">
+                        <Button variant="primary" size="md" className="gap-2 shadow-lg flex items-center flex-row justify-center">
                           <ArrowRight className="w-4 h-4" />
                           <span className="text-ink-50">Explore Experience</span>
                         </Button>
@@ -162,9 +143,7 @@ export function FeaturedCarousel({ events = [] }) {
           <button
             key={i}
             onClick={() => scrollTo(i)}
-            className={`transition-all rounded-full ${
-              i === selectedIndex ? "w-6 h-2 bg-[#E65100]" : "w-2 h-2 bg-white/50 hover:bg-white/80"
-            }`}
+            className={`transition-all rounded-full ${i === selectedIndex ? "w-6 h-2 bg-[#E65100]" : "w-2 h-2 bg-white/50 hover:bg-white/80"}`}
           />
         ))}
       </div>
