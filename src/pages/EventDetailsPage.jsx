@@ -2,7 +2,27 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router"
 export default function EventDetailsPage() {
-  
+  const [eventDetail, setEventDetail] = useState({})
+  const { id } = useParams()
+  useEffect(() => {
+    async function GetEventDetail() {
+      try {
+        let {
+          data: { data },
+        } = await axios.get(`https://eventsphere-server-mfdb.onrender.com/api/events/${id}`)
+
+        setEventDetail(data)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    if (id) {
+      GetEventDetail()
+    }
+  }, [id])
+  {
+    console.log(eventDetail)
+  }
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 pb-24">
       {/* Back button */}
