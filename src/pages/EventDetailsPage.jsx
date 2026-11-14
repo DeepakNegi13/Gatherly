@@ -1,6 +1,6 @@
 import { formatEventDate } from "#lib/utils"
 import axios from "axios"
-import { Calendar, Clock, Clock2Icon, Sparkles } from "lucide-react"
+import { Calendar, Clock, Clock2Icon, LocationEdit, Sparkles } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router"
 export default function EventDetailsPage() {
@@ -80,7 +80,7 @@ export default function EventDetailsPage() {
              <Clock2Icon/>09:30 AM – 06:00 PM IST          </span>
             <span>•</span>
             <span className="flex items-center gap-1">
-              <span>📍</span> Bangalore International Centre, Domlur, Bengaluru
+              <LocationEdit/> {event.city} International Centre, Domlur, Bengaluru
             </span>
           </div>
         </div>
