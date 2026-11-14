@@ -1,6 +1,6 @@
 import { ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
-import { GatherlyLogo } from "../assets/icons/GatherlyLogo";
+import { GatherlyLogo } from "../../assets/icons/GatherlyLogo";
 function Footer() {
 	return (
 		<footer className="bg-[#181816] text-[#E5E3DC] pt-16 pb-12 border-t border-[#2B2A27]">

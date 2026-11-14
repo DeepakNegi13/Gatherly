@@ -1,4 +1,4 @@
-import { formatPrice } from "#lib/utils"
+import { formatEventDate, formatPrice } from "#lib/utils"
 import { Bookmark} from "lucide-react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
@@ -23,13 +23,13 @@ function EventCard({ event }) {
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
           />
           <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-            <span className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-black/70 text-white backdrop-blur-md shadow-sm">Technology & AI</span>
+            <span className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-black/70 text-white backdrop-blur-md shadow-sm">{event.category.name}</span>
             <button
               type="button"
               className="pointer-events-auto w-8 h-8 rounded-full bg-white/90 backdrop-blur-md shadow-sm border border-black/5 flex items-center justify-center text-stone-700 text-xs z-40"
               onClick={toSave}>
               {saved ?
-                <Bookmark className="bg-amber-400"/>
+                <Bookmark className="bg-amber-400" />
               : <Bookmark />}
             </button>
           </div>
@@ -38,7 +38,7 @@ function EventCard({ event }) {
         <div className="p-4 space-y-2">
           <div className="flex items-center gap-2 text-xs font-semibold text-[#C2410C]">
             <span>📅</span>
-            <span>Sat, Nov 15, 2026</span>
+            <span>{formatEventDate(event.startDate)}</span>
             <span className="text-stone-300 font-normal">•</span>
             <span className="text-stone-500 font-normal truncate">{event.city}</span>
           </div>

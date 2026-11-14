@@ -77,7 +77,6 @@ export default function Home() {
           data: { data },
         } = await axios.get("https://eventsphere-server-mfdb.onrender.com/api/events?limit=16&sort=startDate&order=asc")
         setUpcomingEvents(data)
-        console.log(data)
       } catch (error) {
         console.log(error)
       } finally {
