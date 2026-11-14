@@ -1,5 +1,5 @@
 import { formatEventDate, formatPrice } from "#lib/utils"
-import { Bookmark} from "lucide-react"
+import { Bookmark, Calendar} from "lucide-react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
@@ -13,7 +13,7 @@ function EventCard({ event }) {
   return (
     <Link
       key={event._id}
-      to={`events/${event.title}`}
+      to={`events/${event.slug}`}
       className="group bg-white rounded-2xl border border-[#EAE7DC] overflow-hidden flex flex-col justify-between shadow-[0_2px_8px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_24px_-8px_rgba(0,0,0,0.08)] hover:border-[#D5D0C2] hover:-translate-y-0.5 transition-all duration-300">
       <div>
         <div className="relative aspect-16/10 overflow-hidden bg-stone-100">
@@ -37,7 +37,7 @@ function EventCard({ event }) {
 
         <div className="p-4 space-y-2">
           <div className="flex items-center gap-2 text-xs font-semibold text-[#C2410C]">
-            <span>📅</span>
+            <Calendar />
             <span>{formatEventDate(event.startDate)}</span>
             <span className="text-stone-300 font-normal">•</span>
             <span className="text-stone-500 font-normal truncate">{event.city}</span>

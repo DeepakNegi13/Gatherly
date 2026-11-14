@@ -5,6 +5,7 @@ import { BriefcaseBusiness, ChevronRight, Compass, CpuAi, Flame, GraduationCapIc
 import { Link } from "react-router-dom"
 import axios from "axios"
 import EventCard from "#components/events/EventCard"
+import Skeleton from "#components/common/Skeleton"
 const hubCities = [
   { Url: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=500&q=80", name: "Bengaluru" },
   { Url: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=500&q=80", name: "Mumbai" },
@@ -183,29 +184,32 @@ export default function Home() {
       </section>
 
       {/* Upcoming Gatherings Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        {/* top header bar of the section */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#EBE8DF]">
+      {isLoading ?
+        [...Array(8)].map((_, id) => <Skeleton />)
+      : <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           {/* top header bar of the section */}
-          <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-stone-900 tracking-tight">Upcoming Gatherings</h2>
-            <p className="text-xs text-stone-500">Verified community events happening in the coming days</p>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#EBE8DF]">
+            {/* top header bar of the section */}
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold text-stone-900 tracking-tight">Upcoming Gatherings</h2>
+              <p className="text-xs text-stone-500">Verified community events happening in the coming days</p>
+            </div>
+            {/* explore event button */}
+            <Link
+              to="/explore"
+              className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap px-3 py-1.5 text-xs rounded-lg font-medium border border-[#CCC8BA] bg-transparent hover:bg-[#F2F1EC] text-[#222]">
+              <span>View All Events</span>
+              <span>→</span>
+            </Link>
           </div>
-          {/* explore event button */}
-          <Link
-            to="/explore"
-            className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap px-3 py-1.5 text-xs rounded-lg font-medium border border-[#CCC8BA] bg-transparent hover:bg-[#F2F1EC] text-[#222]">
-            <span>View All Events</span>
-            <span>→</span>
-          </Link>
-        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {upcomingEvents.map(event => {
-            return <EventCard event={event} />
-          })}
-        </div>
-      </section>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {upcomingEvents.map(event => {
+              return <EventCard event={event} />
+            })}
+          </div>
+        </section>
+      }
       {/* City Hubs Spotlight */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
         {/* top heading */}
