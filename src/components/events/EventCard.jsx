@@ -1,11 +1,10 @@
 import { formatEventDate, formatPrice } from "#lib/utils"
 import { Bookmark, Calendar} from "lucide-react"
-import { useState } from "react"
+import {useState } from "react"
 import { Link } from "react-router-dom"
 
 function EventCard({ event }) {
   // const navigate = useNavigate()
-  console.log(event)
   const [saved, setSaved] = useState(false)
   function toSave() {
     setSaved(saved => !saved)
