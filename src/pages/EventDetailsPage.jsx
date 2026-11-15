@@ -1,6 +1,6 @@
 import { formatEventDate } from "#lib/utils"
 import axios from "axios"
-import { Calendar, Clock, Clock2Icon, LocationEdit, Sparkles } from "lucide-react"
+import { Calendar, Clock2Icon, LocationEdit, Sparkles } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router"
 export default function EventDetailsPage() {
@@ -14,6 +14,8 @@ export default function EventDetailsPage() {
         } = await axios.get(`https://eventsphere-server-mfdb.onrender.com/api/events/${id}`)
 
         setEvent(data)
+
+        console.log(event)
       } catch (err) {
         console.error(err)
       }
@@ -22,9 +24,7 @@ export default function EventDetailsPage() {
       GetEventDetail()
     }
   }, [id])
-  {
-    console.log(event)
-  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 pb-24">
       {/* Back button */}
@@ -53,34 +53,35 @@ export default function EventDetailsPage() {
 
       {/* Hero Banner Image */}
       <div className="relative rounded-3xl overflow-hidden aspect-16/8 max-h-115 shadow-subtle border border-[#EBE8DF]">
-        <img src={event.image} alt="Next-Gen React & Server Components Summit" className="w-full h-full object-cover" />
+        <img src={event?.image} alt="Next-Gen React & Server Components Summit" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent" />
 
         <div className="absolute bottom-6 left-6 right-6 text-white space-y-2">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-black/60 backdrop-blur-md text-white border border-white/20 text-xs px-2.5 py-1 rounded-full font-medium">
-              Technology & AI
+              {event?.category?.name}
             </span>
             <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-[#EBF3ED] text-[#245436] border border-[#CFE2D4] text-xs px-2.5 py-1 rounded-full font-medium">
-              In-Person Gathering
+              {event?.formate} Gathering
             </span>
             <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-[#FFF3E0] text-[#B73E00] border border-[#FFE0B2] text-xs px-2.5 py-1 rounded-full font-medium">
               <Sparkles /> Featured Pick
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">{event.title}</h1>
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">{event?.title}</h1>
 
           <div className="flex items-center gap-4 text-xs sm:text-sm text-stone-200 pt-1 flex-wrap font-medium">
             <span className="flex items-center gap-1 text-orange-300 font-semibold">
-              <Calendar />
+              <Calendar /> {event?.createdAt && formatEventDate(event?.createdAt)}
             </span>
             <span>•</span>
             <span className="flex items-center gap-1">
-             <Clock2Icon/>09:30 AM – 06:00 PM IST          </span>
+              <Clock2Icon /> {event?.createdAt && formatEventDate(event?.createdAt)}
+            </span>
             <span>•</span>
             <span className="flex items-center gap-1">
-              <LocationEdit/> {event.city} International Centre, Domlur, Bengaluru
+              <LocationEdit /> {event?.city} International Centre, {event?.venue}, {event?.city}
             </span>
           </div>
         </div>
@@ -102,10 +103,9 @@ export default function EventDetailsPage() {
             {/* Tags */}
             <div className="pt-4 border-t border-[#F2EFE8] flex items-center gap-2 flex-wrap">
               <span className="text-xs font-semibold text-stone-500">Focus Areas:</span>
-              <span className="text-xs font-medium text-stone-600 bg-stone-100 px-2.5 py-1 rounded-lg">#react</span>
-              <span className="text-xs font-medium text-stone-600 bg-stone-100 px-2.5 py-1 rounded-lg">#server-components</span>
-              <span className="text-xs font-medium text-stone-600 bg-stone-100 px-2.5 py-1 rounded-lg">#performance</span>
-              <span className="text-xs font-medium text-stone-600 bg-stone-100 px-2.5 py-1 rounded-lg">#architecture</span>
+              {event?.tags?.map(key => (
+                <span className="text-xs font-medium text-stone-600 bg-stone-100 px-2.5 py-1 rounded-lg">{key}</span>
+              ))}
             </div>
           </section>
 
@@ -115,8 +115,10 @@ export default function EventDetailsPage() {
             <div className="bg-[#FAF9F5] rounded-2xl p-4 border border-[#EAE7DC] flex items-start gap-3">
               <div className="w-10 h-10 rounded-xl bg-orange-100 text-[#C2410C] flex items-center justify-center shrink-0 text-lg">📍</div>
               <div>
-                <p className="font-bold text-sm text-stone-900">Bangalore International Centre, Domlur</p>
-                <p className="text-xs text-stone-600 mt-0.5">Bengaluru, India</p>
+                <p className="font-bold text-sm text-stone-900">{event?.city} International Centre</p>
+                <p className="text-xs text-stone-600 mt-0.5">
+                  {event?.city} International Centre, {event?.venue},India
+                </p>
               </div>
             </div>
           </section>
@@ -125,16 +127,12 @@ export default function EventDetailsPage() {
           <section className="bg-white rounded-3xl border border-[#EBE8DF] p-6 sm:p-8 shadow-subtle space-y-4">
             <h3 className="text-lg font-bold text-stone-900">Curated & Hosted by</h3>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-              <img
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80"
-                alt="Rohit Verma"
-                className="w-14 h-14 rounded-2xl object-cover border border-[#DDD9CE]"
-              />
+              <img src={event?.organizer?.avatar} alt="Rohit Verma" className="w-14 h-14 rounded-2xl object-cover border border-[#DDD9CE]" />
               <div className="space-y-1 flex-1">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
                     <Link to="/profile" className="font-bold text-base text-stone-900 hover:text-[#E65100] transition-colors">
-                      Rohit Verma
+                      {event?.organizer?.name}
                     </Link>
                     <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-stone-100 text-stone-700">Organizer</span>
                   </div>
@@ -147,10 +145,8 @@ export default function EventDetailsPage() {
                     </button>
                   </Link>
                 </div>
-                <p className="text-xs font-medium text-[#C2410C]">React India Guild</p>
-                <p className="text-xs text-stone-600 leading-relaxed pt-1">
-                  Community organizer and software architect fostering collaborative open-source tech initiatives across South Asia.
-                </p>
+                <p className="text-xs font-medium text-[#C2410C]">{event?.organizer?.organization}</p>
+                <p className="text-xs text-stone-600 leading-relaxed pt-1">{event?.organizer?.bio}</p>
               </div>
             </div>
           </section>
