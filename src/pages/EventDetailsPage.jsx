@@ -1,6 +1,6 @@
 import { formatEventDate } from "#lib/utils"
 import axios from "axios"
-import { Calendar, Clock2Icon, LocationEdit, Sparkles } from "lucide-react"
+import { Bookmark, Calendar, Clock2Icon, LinkIcon, LocationEdit, LocationEditIcon, LucideLocationEdit, Shield, Sparkles, Star, Users } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router"
 export default function EventDetailsPage() {
@@ -38,14 +38,14 @@ export default function EventDetailsPage() {
           <button
             type="button"
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#DDD9CE] bg-white hover:bg-stone-50 text-xs font-medium text-stone-700 transition-all cursor-pointer">
-            <span>🔗</span>
+            <LinkIcon />
             <span>Share</span>
           </button>
 
           <button
             type="button"
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer bg-white border-[#DDD9CE] hover:bg-stone-50 text-stone-700">
-            <span>🔖</span>
+            <Bookmark />
             <span>Save</span>
           </button>
         </div>
@@ -113,7 +113,9 @@ export default function EventDetailsPage() {
           <section className="bg-white rounded-3xl border border-[#EBE8DF] p-6 sm:p-8 shadow-subtle space-y-4">
             <h3 className="text-lg font-bold text-stone-900">Venue & Access</h3>
             <div className="bg-[#FAF9F5] rounded-2xl p-4 border border-[#EAE7DC] flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-orange-100 text-[#C2410C] flex items-center justify-center shrink-0 text-lg">📍</div>
+              <div className="w-10 h-10 rounded-xl bg-orange-100 text-[#C2410C] flex items-center justify-center shrink-0 text-lg">
+                <LucideLocationEdit />
+              </div>
               <div>
                 <p className="font-bold text-sm text-stone-900">{event?.city} International Centre</p>
                 <p className="text-xs text-stone-600 mt-0.5">
@@ -161,7 +163,9 @@ export default function EventDetailsPage() {
 
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1 text-[#E65100]">
-                  <span className="text-amber-500 text-lg">⭐</span>
+                  <span className="text-amber-500 text-lg">
+                    <Star />
+                  </span>
                   <span className="text-lg font-black text-stone-900">4.9</span>
                 </div>
                 <span className="text-xs text-stone-400 font-medium">(3 reviews)</span>
@@ -173,11 +177,13 @@ export default function EventDetailsPage() {
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <span className="text-xs font-bold text-stone-800">Rate your experience:</span>
                 <div className="flex items-center gap-1 text-base text-amber-500 cursor-pointer">
-                  <span>⭐</span>
-                  <span>⭐</span>
-                  <span>⭐</span>
-                  <span>⭐</span>
-                  <span>⭐</span>
+                  {[...Array(5)].map((_, id) => {
+                    return (
+                      <span>
+                        <Star />
+                      </span>
+                    )
+                  })}
                   <span className="text-xs font-bold text-stone-700 ml-1.5">5 / 5</span>
                 </div>
               </div>
@@ -274,7 +280,7 @@ export default function EventDetailsPage() {
             <div className="space-y-2">
               <div className="flex justify-between text-xs text-stone-600">
                 <span className="flex items-center gap-1.5 font-medium">
-                  <span>👥</span> Capacity
+                  <span><Users /></span> Capacity
                 </span>
                 <span className="font-bold text-stone-900">85 of 100 seats filled</span>
               </div>
@@ -295,14 +301,14 @@ export default function EventDetailsPage() {
               <button
                 type="button"
                 className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium h-10 px-4 py-2 border border-[#CCC8BA] bg-transparent hover:bg-[#F2F1EC] text-[#222] w-full">
-                <span>📅</span> Add to My Schedule
+                <Calendar /> Add to My Schedule
               </button>
             </div>
 
             {/* Trust points */}
             <div className="pt-4 border-t border-[#F2EFE8] space-y-2 text-[11px] text-stone-500">
               <div className="flex items-center gap-2">
-                <span className="text-emerald-600">🛡️</span>
+                <span className="text-emerald-600"><Shield /></span>
                 <span>Verified organizer & authentic attendee review policy</span>
               </div>
               <div className="flex items-center gap-2">
