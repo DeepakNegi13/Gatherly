@@ -1,6 +1,6 @@
 import { formatEventDate } from "#lib/utils"
 import axios from "axios"
-import { Bookmark, Calendar, Clock2Icon, LinkIcon, LocationEdit, LocationEditIcon, LucideLocationEdit, Shield, Sparkles, Star, Users } from "lucide-react"
+import { Bookmark, Calendar, Check, CheckCircle2, Clock2Icon, Dot, LinkIcon, LocationEdit, LocationEditIcon, LucideLocationEdit, Mail, Shield, Sparkles, Star, Users } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router"
 export default function EventDetailsPage() {
@@ -75,11 +75,15 @@ export default function EventDetailsPage() {
             <span className="flex items-center gap-1 text-orange-300 font-semibold">
               <Calendar /> {event?.createdAt && formatEventDate(event?.createdAt)}
             </span>
-            <span>•</span>
+            <span>
+              <Dot className="size-5" />
+            </span>
             <span className="flex items-center gap-1">
               <Clock2Icon /> {event?.createdAt && formatEventDate(event?.createdAt)}
             </span>
-            <span>•</span>
+            <span>
+              <Dot className="size-5" />
+            </span>
             <span className="flex items-center gap-1">
               <LocationEdit /> {event?.city} International Centre, {event?.venue}, {event?.city}
             </span>
@@ -199,7 +203,9 @@ export default function EventDetailsPage() {
                 <button
                   type="submit"
                   className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-xs font-medium px-3 py-1.5 bg-[#E65100] text-white hover:bg-[#D84315] shadow-sm">
-                  <span>✉️</span>
+                  <span>
+                    <Mail size={24} />
+                  </span>
                   <span>Post Review</span>
                 </button>
               </div>
@@ -280,7 +286,10 @@ export default function EventDetailsPage() {
             <div className="space-y-2">
               <div className="flex justify-between text-xs text-stone-600">
                 <span className="flex items-center gap-1.5 font-medium">
-                  <span><Users /></span> Capacity
+                  <span>
+                    <Users />
+                  </span>{" "}
+                  Capacity
                 </span>
                 <span className="font-bold text-stone-900">85 of 100 seats filled</span>
               </div>
@@ -308,11 +317,15 @@ export default function EventDetailsPage() {
             {/* Trust points */}
             <div className="pt-4 border-t border-[#F2EFE8] space-y-2 text-[11px] text-stone-500">
               <div className="flex items-center gap-2">
-                <span className="text-emerald-600"><Shield /></span>
+                <span className="text-emerald-600">
+                  <Shield />
+                </span>
                 <span>Verified organizer & authentic attendee review policy</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-stone-400">✓</span>
+                <span className="text-stone-400">
+                  <CheckCircle2 size={24} />
+                </span>
                 <span>Digital ticket QR sent to your email instantly</span>
               </div>
             </div>
