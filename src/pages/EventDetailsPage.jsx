@@ -1,21 +1,6 @@
 import { formatEventDate, formatEventTimeRange, formatPrice, getDaysRemaining } from "#lib/utils"
 import axios from "axios"
-import {
-  Bookmark,
-  Calendar,
-  CheckCircle2,
-  ChevronLeft,
-  Clock2Icon,
-  Dot,
-  LinkIcon,
-  LucideLocationEdit,
-  Mail,
-  MapPin,
-  Shield,
-  Sparkles,
-  Star,
-  Users,
-} from "lucide-react"
+import { Bookmark, Calendar, CheckCircle2, ChevronLeft, Clock2Icon, Dot, LinkIcon, LucideLocationEdit, Mail, MapPin, Shield, Sparkles, Star, Users } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router"
 import { toast } from "sonner"
@@ -78,20 +63,15 @@ export default function EventDetailsPage() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => {
-              
               shareLink()
             }}
-            
-            // onClick={shareLink}
             type="button"
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#DDD9CE] bg-white hover:bg-stone-50 text-xs font-medium text-stone-700 transition-all cursor-pointer">
             <LinkIcon />
             <span>Share</span>
           </button>
 
-          <button
-            type="button"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer bg-white border-[#DDD9CE] hover:bg-stone-50 text-stone-700">
+          <button type="button" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer bg-white border-[#DDD9CE] hover:bg-stone-50 text-stone-700">
             <Bookmark />
             <span>Save</span>
           </button>
@@ -104,12 +84,8 @@ export default function EventDetailsPage() {
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent" />
         <div className="absolute bottom-6 left-6 right-6 text-white space-y-2">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-black/60 backdrop-blur-md text-white border border-white/20 text-xs px-2.5 py-1 rounded-full font-medium">
-              {event?.category?.name}
-            </span>
-            <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-[#EBF3ED] text-[#245436] border border-[#CFE2D4] text-xs px-2.5 py-1 rounded-full font-medium">
-              {Modes[event.format]}
-            </span>
+            <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-black/60 backdrop-blur-md text-white border border-white/20 text-xs px-2.5 py-1 rounded-full font-medium">{event?.category?.name}</span>
+            <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-[#EBF3ED] text-[#245436] border border-[#CFE2D4] text-xs px-2.5 py-1 rounded-full font-medium">{Modes[event.format]}</span>
             {event?.feature && (
               <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-[#FFF3E0] text-[#B73E00] border border-[#FFE0B2] text-xs px-2.5 py-1 rounded-full font-medium">
                 <Sparkles className="size-4" /> Featured Pick
@@ -188,9 +164,7 @@ export default function EventDetailsPage() {
                   </div>
 
                   <Link to="/profile">
-                    <button
-                      type="button"
-                      className="inline-flex items-center justify-center font-medium border border-[#CCC8BA] bg-transparent hover:bg-[#F2F1EC] text-[#222] rounded-lg text-xs h-8 px-3">
+                    <button type="button" className="inline-flex items-center justify-center font-medium border border-[#CCC8BA] bg-transparent hover:bg-[#F2F1EC] text-[#222] rounded-lg text-xs h-8 px-3">
                       View Profile
                     </button>
                   </Link>
@@ -236,17 +210,10 @@ export default function EventDetailsPage() {
                 </div>
               </div>
 
-              <textarea
-                rows={3}
-                name="comment"
-                placeholder="Share how the venue, speakers, curation, or atmosphere resonated with you..."
-                className="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-[#DDD9CE] focus:border-[#E65100] outline-none text-stone-800"
-              />
+              <textarea rows={3} name="comment" placeholder="Share how the venue, speakers, curation, or atmosphere resonated with you..." className="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-[#DDD9CE] focus:border-[#E65100] outline-none text-stone-800" />
 
               <div className="flex justify-end">
-                <button
-                  type="submit"
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-xs font-medium px-3 py-1.5 bg-[#E65100] text-white hover:bg-[#D84315] shadow-sm">
+                <button type="submit" className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-xs font-medium px-3 py-1.5 bg-[#E65100] text-white hover:bg-[#D84315] shadow-sm">
                   <span>
                     <Mail size={24} />
                   </span>
@@ -260,11 +227,7 @@ export default function EventDetailsPage() {
               <div className="p-4 rounded-2xl bg-white border border-[#F0ECE2] space-y-2.5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <img
-                      src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"
-                      alt="Pooja Sharma"
-                      className="w-7 h-7 rounded-full object-cover border border-[#DDD9CE]"
-                    />
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Pooja Sharma" className="w-7 h-7 rounded-full object-cover border border-[#DDD9CE]" />
                     <div>
                       <p className="text-xs font-bold text-stone-900 leading-none">Pooja Sharma</p>
                       <p className="text-[10px] text-stone-400 mt-0.5">2 days ago</p>
@@ -278,19 +241,13 @@ export default function EventDetailsPage() {
                     <span>★</span>
                   </div>
                 </div>
-                <p className="text-xs text-stone-700 leading-relaxed pl-9">
-                  Exceptional architectural discussions on React Server Components! The live demos brought rare clarity.
-                </p>
+                <p className="text-xs text-stone-700 leading-relaxed pl-9">Exceptional architectural discussions on React Server Components! The live demos brought rare clarity.</p>
               </div>
 
               <div className="p-4 rounded-2xl bg-white border border-[#F0ECE2] space-y-2.5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <img
-                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80"
-                      alt="Aditya Menon"
-                      className="w-7 h-7 rounded-full object-cover border border-[#DDD9CE]"
-                    />
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="Aditya Menon" className="w-7 h-7 rounded-full object-cover border border-[#DDD9CE]" />
                     <div>
                       <p className="text-xs font-bold text-stone-900 leading-none">Aditya Menon</p>
                       <p className="text-[10px] text-stone-400 mt-0.5">5 days ago</p>
@@ -304,9 +261,7 @@ export default function EventDetailsPage() {
                     <span>★</span>
                   </div>
                 </div>
-                <p className="text-xs text-stone-700 leading-relaxed pl-9">
-                  The venue at BIC Domlur was immaculate, sound engineering was spot on, and connecting with peers was invaluable.
-                </p>
+                <p className="text-xs text-stone-700 leading-relaxed pl-9">The venue at BIC Domlur was immaculate, sound engineering was spot on, and connecting with peers was invaluable.</p>
               </div>
             </div>
           </section>
@@ -348,15 +303,11 @@ export default function EventDetailsPage() {
 
             {/* Action Buttons */}
             <div className="space-y-2.5 pt-2">
-              <button
-                type="button"
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl font-medium bg-[#E65100] text-white hover:bg-[#D84315] w-full py-3.5 text-base shadow-elevated">
+              <button type="button" className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl font-medium bg-[#E65100] text-white hover:bg-[#D84315] w-full py-3.5 text-base shadow-elevated">
                 Reserve Passes
               </button>
 
-              <button
-                type="button"
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium h-10 px-4 py-2 border border-[#CCC8BA] bg-transparent hover:bg-[#F2F1EC] text-[#222] w-full">
+              <button type="button" className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium h-10 px-4 py-2 border border-[#CCC8BA] bg-transparent hover:bg-[#F2F1EC] text-[#222] w-full">
                 <Calendar /> Add to My Schedule
               </button>
             </div>

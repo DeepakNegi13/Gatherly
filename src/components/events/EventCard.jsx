@@ -1,6 +1,6 @@
 import { formatEventDate, formatPrice } from "#lib/utils"
-import { Bookmark, Calendar} from "lucide-react"
-import {useState } from "react"
+import { Bookmark, Calendar } from "lucide-react"
+import { useState } from "react"
 import { Link } from "react-router-dom"
 
 function EventCard({ event }) {
@@ -10,23 +10,13 @@ function EventCard({ event }) {
     setSaved(saved => !saved)
   }
   return (
-    <Link
-      key={event._id}
-      to={`events/${event.slug}`}
-      className="group bg-white rounded-2xl border border-[#EAE7DC] overflow-hidden flex flex-col justify-between shadow-[0_2px_8px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_24px_-8px_rgba(0,0,0,0.08)] hover:border-[#D5D0C2] hover:-translate-y-0.5 transition-all duration-300">
+    <Link key={event._id} to={`events/${event.slug}`} className="group bg-white rounded-2xl border border-[#EAE7DC] overflow-hidden flex flex-col justify-between shadow-[0_2px_8px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_24px_-8px_rgba(0,0,0,0.08)] hover:border-[#D5D0C2] hover:-translate-y-0.5 transition-all duration-300">
       <div>
         <div className="relative aspect-16/10 overflow-hidden bg-stone-100">
-          <img
-            src={event.image}
-            alt="Next-Gen React & Server Components Summit"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-          />
+          <img src={event.image} alt="Next-Gen React & Server Components Summit" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
           <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
             <span className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-black/70 text-white backdrop-blur-md shadow-sm">{event.category.name}</span>
-            <button
-              type="button"
-              className="pointer-events-auto w-8 h-8 rounded-full bg-white/90 backdrop-blur-md shadow-sm border border-black/5 flex items-center justify-center text-stone-700 text-xs z-40"
-              onClick={toSave}>
+            <button type="button" className="pointer-events-auto w-8 h-8 rounded-full bg-white/90 backdrop-blur-md shadow-sm border border-black/5 flex items-center justify-center text-stone-700 text-xs z-40" onClick={toSave}>
               {saved ?
                 <Bookmark className="bg-amber-400" />
               : <Bookmark />}

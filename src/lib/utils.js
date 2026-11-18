@@ -6,8 +6,8 @@ export function formatPrice(price, currency = "INR") {
   return new Intl.NumberFormat("en-IN", { style: "currency", currency, maximumFractionDigits: 0 }).format(val)
 }
 export function formatEventDate(dateInput) {
-  if(dateInput==null || dateInput==undefined){
-    return 
+  if (dateInput == null || dateInput == undefined) {
+    return
   }
   const date = parseISO(dateInput)
   return format(date, "E, LLL dd, yyyy")
