@@ -1,4 +1,4 @@
-import { formatEventDate, formatPrice } from "#lib/utils"
+import { formatEventDate, formatEventTimeRange, formatPrice } from "#lib/utils"
 import axios from "axios"
 import {
   Bookmark,
@@ -11,6 +11,7 @@ import {
   LocationEdit,
   LucideLocationEdit,
   Mail,
+  MapPin,
   Shield,
   Sparkles,
   Star,
@@ -114,13 +115,13 @@ export default function EventDetailsPage() {
               <Dot className="size-5" />
             </span>
             <span className="flex items-center gap-1">
-              <Clock2Icon /> {event?.createdAt && formatEventDate(event?.createdAt)}
+              <Clock2Icon /> {formatEventTimeRange(event.startDate, event.endDate)}
             </span>
             <span>
               <Dot className="size-5" />
             </span>
             <span className="flex items-center gap-1">
-              <LocationEdit /> {event?.city} International Centre, {event?.venue}, {event?.city}
+              <MapPin /> {event?.city} International Centre, {event?.venue}, {event?.city}
             </span>
           </div>
         </div>
