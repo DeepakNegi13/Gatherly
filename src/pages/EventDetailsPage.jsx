@@ -1,6 +1,21 @@
-import { formatEventDate } from "#lib/utils"
+import { formatEventDate, formatPrice } from "#lib/utils"
 import axios from "axios"
-import { Bookmark, Calendar, Check, CheckCircle2, Clock2Icon, Dot, LinkIcon, LocationEdit, LocationEditIcon, LucideLocationEdit, Mail, Shield, Sparkles, Star, Users } from "lucide-react"
+import {
+  Bookmark,
+  Calendar,
+  CheckCircle2,
+  ChevronLeft,
+  Clock2Icon,
+  Dot,
+  LinkIcon,
+  LocationEdit,
+  LucideLocationEdit,
+  Mail,
+  Shield,
+  Sparkles,
+  Star,
+  Users,
+} from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router"
 export default function EventDetailsPage() {
@@ -14,8 +29,8 @@ export default function EventDetailsPage() {
         } = await axios.get(`https://eventsphere-server-mfdb.onrender.com/api/events/${id}`)
 
         setEvent(data)
-
-        console.log(event)
+        if (event != {}) console.log(event)
+        
       } catch (err) {
         console.error(err)
       }
@@ -23,14 +38,15 @@ export default function EventDetailsPage() {
     if (id) {
       GetEventDetail()
     }
-  }, [id])
+   
+  }, [event, id])
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 pb-24">
       {/* Back button */}
       <div className="flex items-center justify-between">
         <Link to="/explore" className="inline-flex items-center gap-1.5 text-xs font-semibold text-stone-600 hover:text-stone-900 transition-colors">
-          <span>‹</span>
+          <ChevronLeft className="size-4 Stroke-[2px]" />
           <span>Back to Explore</span>
         </Link>
 
@@ -55,7 +71,6 @@ export default function EventDetailsPage() {
       <div className="relative rounded-3xl overflow-hidden aspect-16/8 max-h-115 shadow-subtle border border-[#EBE8DF]">
         <img src={event?.image} alt="Next-Gen React & Server Components Summit" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent" />
-
         <div className="absolute bottom-6 left-6 right-6 text-white space-y-2">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-black/60 backdrop-blur-md text-white border border-white/20 text-xs px-2.5 py-1 rounded-full font-medium">
@@ -65,13 +80,13 @@ export default function EventDetailsPage() {
               {event?.formate} Gathering
             </span>
             <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-[#FFF3E0] text-[#B73E00] border border-[#FFE0B2] text-xs px-2.5 py-1 rounded-full font-medium">
-              <Sparkles /> Featured Pick
+              <Sparkles className="size-4" /> Featured Pick
             </span>
           </div>
 
           <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">{event?.title}</h1>
 
-          <div className="flex items-center gap-4 text-xs sm:text-sm text-stone-200 pt-1 flex-wrap font-medium">
+          <div className="flex items-center gap-2 text-xs sm:text-sm text-stone-200 pt-1 flex-wrap font-medium">
             <span className="flex items-center gap-1 text-orange-300 font-semibold">
               <Calendar /> {event?.createdAt && formatEventDate(event?.createdAt)}
             </span>
@@ -181,7 +196,7 @@ export default function EventDetailsPage() {
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <span className="text-xs font-bold text-stone-800">Rate your experience:</span>
                 <div className="flex items-center gap-1 text-base text-amber-500 cursor-pointer">
-                  {[...Array(5)].map((_, id) => {
+                  {[...Array(5)].map(() => {
                     return (
                       <span>
                         <Star />
@@ -274,7 +289,7 @@ export default function EventDetailsPage() {
             <div className="flex items-baseline justify-between pb-4 border-b border-[#F2EFE8]">
               <div>
                 <span className="text-[10px] uppercase font-bold tracking-wider text-stone-400">Admission Pass</span>
-                <div className="text-3xl font-extrabold text-stone-900 mt-0.5">₹1,499</div>
+                <div className="text-3xl font-extrabold text-stone-900 mt-0.5">{formatPrice(event?.price, event?.currency)}</div>
               </div>
 
               <div className="text-right">
@@ -291,12 +306,14 @@ export default function EventDetailsPage() {
                   </span>{" "}
                   Capacity
                 </span>
-                <span className="font-bold text-stone-900">85 of 100 seats filled</span>
+                <span className="font-bold text-stone-900">
+                  {event?.registeredCount} of {event?.capacity} seats filled
+                </span>
               </div>
               <div className="w-full h-2 bg-stone-100 rounded-full overflow-hidden">
                 <div className="h-full bg-[#E65100] rounded-full transition-all w-[80%]" />
               </div>
-              <p className="text-[11px] text-stone-400 text-right">15 seats remaining</p>
+              <p className="text-[11px] text-stone-400 text-right">{event?.capacity - event.registeredCount} seats remaining</p>
             </div>
 
             {/* Action Buttons */}
