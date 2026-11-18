@@ -18,7 +18,10 @@ import {
 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router"
+const Modes = { "in-person": "In-Person Gathering", "online": "Online Conclave", "hybrid": "Hybrid Format" }
+
 export default function EventDetailsPage() {
+  const [isLoading,setIsLoading] = useState(true);
   const [event, setEvent] = useState({})
   const { id } = useParams()
   useEffect(() => {
@@ -27,20 +30,35 @@ export default function EventDetailsPage() {
         let {
           data: { data },
         } = await axios.get(`https://eventsphere-server-mfdb.onrender.com/api/events/${id}`)
-
-        setEvent(data)
-        if (event != {}) console.log(event)
         
+        console.log(data)
+        setEvent(data)
       } catch (err) {
         console.error(err)
       }
+      setIsLoading(false)
     }
     if (id) {
       GetEventDetail()
     }
-   
-  }, [event, id])
+  }, [id])
 
+  if (isLoading) {
+    return (
+      <div className="max-w-6xl mx-auto px-4 py-16 space-y-8 animate-pulse">
+        <div className="h-8 w-40 bg-stone-200 rounded-lg" />
+        <div className="aspect-21/9 bg-stone-200 rounded-3xl" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-4">
+            <div className="h-10 bg-stone-200 rounded-lg w-3/4" />
+            <div className="h-4 bg-stone-200 rounded w-full" />
+            <div className="h-4 bg-stone-200 rounded w-5/6" />
+          </div>
+          <div className="h-64 bg-stone-200 rounded-3xl" />
+        </div>
+      </div>
+    )
+  }
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 pb-24">
       {/* Back button */}
@@ -77,11 +95,13 @@ export default function EventDetailsPage() {
               {event?.category?.name}
             </span>
             <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-[#EBF3ED] text-[#245436] border border-[#CFE2D4] text-xs px-2.5 py-1 rounded-full font-medium">
-              {event?.formate} Gathering
+              {Modes[event.format]}
             </span>
-            <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-[#FFF3E0] text-[#B73E00] border border-[#FFE0B2] text-xs px-2.5 py-1 rounded-full font-medium">
-              <Sparkles className="size-4" /> Featured Pick
-            </span>
+            {event?.feature && (
+              <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-[#FFF3E0] text-[#B73E00] border border-[#FFE0B2] text-xs px-2.5 py-1 rounded-full font-medium">
+                <Sparkles className="size-4" /> Featured Pick
+              </span>
+            )}
           </div>
 
           <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">{event?.title}</h1>
@@ -113,11 +133,7 @@ export default function EventDetailsPage() {
           {/* About Event */}
           <section className="bg-white rounded-3xl border border-[#EBE8DF] p-6 sm:p-8 shadow-subtle space-y-4">
             <h2 className="text-xl font-bold text-stone-900">About the Gathering</h2>
-            <div className="text-sm text-stone-700 leading-relaxed space-y-4 whitespace-pre-line font-normal">
-              Join India's leading frontend architects, core open-source library authors, and product engineers for a full-day summit on React Server
-              Components, Compiler performance, and real-time streaming architectures. Key highlights include in-depth technical sessions, teardowns of
-              large-scale production migrations, live coding demos on concurrent rendering pipelines, and an exclusive networking mixer.
-            </div>
+            <div className="text-sm text-stone-700 leading-relaxed space-y-4 whitespace-pre-line font-normal">{event?.description}</div>
 
             {/* Tags */}
             <div className="pt-4 border-t border-[#F2EFE8] flex items-center gap-2 flex-wrap">
@@ -138,7 +154,7 @@ export default function EventDetailsPage() {
               <div>
                 <p className="font-bold text-sm text-stone-900">{event?.city} International Centre</p>
                 <p className="text-xs text-stone-600 mt-0.5">
-                  {event?.city} International Centre, {event?.venue},India
+                  {event?.city}, {event?.venue},India
                 </p>
               </div>
             </div>
