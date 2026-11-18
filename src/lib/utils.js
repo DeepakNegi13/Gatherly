@@ -1,5 +1,5 @@
 export { cn } from "cn"
-import { format, parseISO } from "date-fns"
+import { format, formatDistanceToNow, parseISO } from "date-fns"
 export function formatPrice(price, currency = "INR") {
   const val = Number(price)
   if (!val) return "FREE"
@@ -27,4 +27,19 @@ export function formatEventTimeRange(startDate, endDate) {
   const endTime = format(end, "h:mm a")
 
   return `${startTime} - ${endTime}`
+}
+
+export function getDaysRemaining(startDate) {
+  if (!startDate) {
+    return
+  }
+
+  const eventDate = parseISO(startDate)
+  const currentDate = new Date()
+
+  if (currentDate > eventDate) {
+    return "Ended"
+  }
+
+  return formatDistanceToNow(eventDate, { addSuffix: true })
 }

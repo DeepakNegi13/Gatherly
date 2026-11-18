@@ -1,4 +1,4 @@
-import { formatEventDate, formatEventTimeRange, formatPrice } from "#lib/utils"
+import { formatEventDate, formatEventTimeRange, formatPrice, getDaysRemaining } from "#lib/utils"
 import axios from "axios"
 import {
   Bookmark,
@@ -8,7 +8,6 @@ import {
   Clock2Icon,
   Dot,
   LinkIcon,
-  LocationEdit,
   LucideLocationEdit,
   Mail,
   MapPin,
@@ -310,7 +309,7 @@ export default function EventDetailsPage() {
               </div>
 
               <div className="text-right">
-                <span className="text-xs font-semibold px-2.5 py-1 bg-stone-100 text-stone-700 rounded-lg">11 days left</span>
+                <span className="text-xs font-semibold px-2.5 py-1 bg-stone-100 text-stone-700 rounded-lg">{getDaysRemaining(event.startDate)}</span>
               </div>
             </div>
 
