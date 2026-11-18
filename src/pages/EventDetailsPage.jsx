@@ -18,11 +18,13 @@ import {
 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router"
-const Modes = { "in-person": "In-Person Gathering", "online": "Online Conclave", "hybrid": "Hybrid Format" }
+const Modes = { "in-person": "In-Person Gathering", online: "Online Conclave", hybrid: "Hybrid Format" }
 
 export default function EventDetailsPage() {
-  const [isLoading,setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true)
   const [event, setEvent] = useState({})
+  const seatBookFraction = `${(event?.registeredCount / event.capacity)*100}%`
+
   const { id } = useParams()
   useEffect(() => {
     async function GetEventDetail() {
@@ -30,7 +32,7 @@ export default function EventDetailsPage() {
         let {
           data: { data },
         } = await axios.get(`https://eventsphere-server-mfdb.onrender.com/api/events/${id}`)
-        
+
         console.log(data)
         setEvent(data)
       } catch (err) {
@@ -326,8 +328,9 @@ export default function EventDetailsPage() {
                   {event?.registeredCount} of {event?.capacity} seats filled
                 </span>
               </div>
+
               <div className="w-full h-2 bg-stone-100 rounded-full overflow-hidden">
-                <div className="h-full bg-[#E65100] rounded-full transition-all w-[80%]" />
+                <div className="h-full bg-[#E65100] rounded-full transition-all" style={{ width: seatBookFraction }} />
               </div>
               <p className="text-[11px] text-stone-400 text-right">{event?.capacity - event.registeredCount} seats remaining</p>
             </div>
