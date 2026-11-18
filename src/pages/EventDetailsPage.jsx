@@ -18,12 +18,17 @@ import {
 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router"
+import { toast } from "sonner"
 const Modes = { "in-person": "In-Person Gathering", online: "Online Conclave", hybrid: "Hybrid Format" }
 
 export default function EventDetailsPage() {
+  function shareLink() {
+    navigator.clipboard.writeText(window.location.href)
+    toast.success("copy to clipboard", { duration: 1000 })
+  }
   const [isLoading, setIsLoading] = useState(true)
   const [event, setEvent] = useState({})
-  const seatBookFraction = `${(event?.registeredCount / event.capacity)*100}%`
+  const seatBookFraction = `${(event?.registeredCount / event.capacity) * 100}%`
 
   const { id } = useParams()
   useEffect(() => {
@@ -72,6 +77,12 @@ export default function EventDetailsPage() {
 
         <div className="flex items-center gap-2">
           <button
+            onClick={() => {
+              
+              shareLink()
+            }}
+            
+            // onClick={shareLink}
             type="button"
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#DDD9CE] bg-white hover:bg-stone-50 text-xs font-medium text-stone-700 transition-all cursor-pointer">
             <LinkIcon />

@@ -5,6 +5,7 @@ import NotFoundPage from "./pages/NotFoundPage"
 import Homepage from "./pages/Homepage"
 import { useEffect } from "react"
 import EventDetailsPage from "./pages/EventDetailsPage"
+import { Toaster } from "sonner"
 // after go to next url the screen is scroll to top
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -13,8 +14,6 @@ function ScrollToTop() {
   }, [pathname])
 }
 const App = () => {
- 
-  
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF9F5] text-stone-900 selection:bg-orange-100 selection:text-[#E65100]">
       <ScrollToTop />
@@ -26,6 +25,8 @@ const App = () => {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
+      <Toaster richColors />
+
       <Footer />
     </div>
   )
