@@ -185,7 +185,7 @@ export default function Home() {
 
       {/* Upcoming Gatherings Grid */}
       {isLoading ?
-        [...Array(8)].map((_, id) => <Skeleton />)
+        [...Array(8)].map(() => <Skeleton />)
       : <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           {/* top header bar of the section */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#EBE8DF]">

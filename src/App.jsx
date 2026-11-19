@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation, useParams, useSearchParams } from "react-router-dom"
+import { Route, Routes, useLocation} from "react-router-dom"
 import Navbar from "./components/common/Navbar"
 import Footer from "./components/common/Footer"
 import NotFoundPage from "./pages/NotFoundPage"
