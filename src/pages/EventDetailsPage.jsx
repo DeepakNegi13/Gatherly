@@ -25,11 +25,11 @@ export default function EventDetailsPage() {
           data: { data },
         } = await axios.get(`https://eventsphere-server-mfdb.onrender.com/api/events/${id}`)
         setEvent(data)
+
         let {
-          data: { data: review },
+          data: { data: reviews },
         } = await axios.get(`https://eventsphere-server-mfdb.onrender.com/api/events/${data.id || data._id}/reviews`)
-        setReviews(review)
-        console.log(reviews)
+        setReviews(reviews)
       } catch (err) {
         console.error(err)
       }
@@ -132,8 +132,10 @@ export default function EventDetailsPage() {
             {/* Tags */}
             <div className="pt-4 border-t border-[#F2EFE8] flex items-center gap-2 flex-wrap">
               <span className="text-xs font-semibold text-stone-500">Focus Areas:</span>
-              {event?.tags?.map(key => (
-                <span className="text-xs font-medium text-stone-600 bg-stone-100 px-2.5 py-1 rounded-lg">{key}</span>
+              {event?.tags?.map((key, id) => (
+                <span key={id} className="text-xs font-medium text-stone-600 bg-stone-100 px-2.5 py-1 rounded-lg">
+                  {key}
+                </span>
               ))}
             </div>
           </section>
@@ -181,7 +183,7 @@ export default function EventDetailsPage() {
           </section>
 
           {/* Reviews section */}
-          <EventReviewSection />
+          <EventReviewSection reviews={reviews} averageRating={event.averageRating} numReviews={event.numReviews} />
         </div>
 
         {/* Right Column: Sticky Booking Ticket Card */}
