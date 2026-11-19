@@ -1,7 +1,6 @@
 import EventReviewSection from "#components/events/EventReviewSection"
 import api from "#lib/axios"
 import { formatEventDate, formatEventTimeRange, formatPrice, getDaysRemaining } from "#lib/utils"
-import axios from "axios"
 import { Bookmark, Calendar, CheckCircle2, ChevronLeft, Clock2Icon, Dot, LinkIcon, LucideLocationEdit, MapPin, Shield, Sparkles, Users } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router"
