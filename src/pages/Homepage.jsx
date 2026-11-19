@@ -6,6 +6,7 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 import EventCard from "#components/events/EventCard"
 import Skeleton from "#components/common/Skeleton"
+import api from "#lib/axios"
 const hubCities = [
   { Url: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=500&q=80", name: "Bengaluru" },
   { Url: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=500&q=80", name: "Mumbai" },
@@ -48,9 +49,7 @@ export default function Home() {
     async function getFeaturedEvents() {
       setIsLoading(true)
       try {
-        let {
-          data: { data },
-        } = await axios.get("https://eventsphere-server-mfdb.onrender.com/api/events/featured")
+        let data = await api.get("/api/events/featured")
         setFeaturedEvents(data)
       } catch (error) {
         console.log(error)
@@ -61,9 +60,7 @@ export default function Home() {
     async function getEventCategory() {
       setIsLoading(true)
       try {
-        let {
-          data: { data },
-        } = await axios.get("https://eventsphere-server-mfdb.onrender.com/api/categories ")
+        let data = await api.get("/api/categories")
         setCategory(data)
       } catch (error) {
         console.log(error)
@@ -74,9 +71,7 @@ export default function Home() {
     async function getUpcomingEvent() {
       setIsLoading(true)
       try {
-        let {
-          data: { data },
-        } = await axios.get("https://eventsphere-server-mfdb.onrender.com/api/events?limit=16&sort=startDate&order=asc")
+        let data = await api.get("/api/events?limit=8&sort=startDate&order=asc")
         setUpcomingEvents(data)
       } catch (error) {
         console.log(error)
@@ -98,12 +93,8 @@ export default function Home() {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-100/70 text-[#C2410C] border border-orange-200">
               <Sparkles className="w-3.5 h-3.5" /> India's Curated Community Conclaves
             </div>
-            <h1 className="text-[10vw] sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#111] leading-[1.08]">
-              Extraordinary gatherings for curious minds.
-            </h1>
-            <p className="text-base sm:text-lg text-stone-600 leading-relaxed font-normal">
-              Discover verified developer summits, acoustic indie evenings, founder pitch conclaves, and art retreats across Bengaluru, Mumbai, and Delhi NCR.
-            </p>
+            <h1 className="text-[10vw] sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#111] leading-[1.08]">Extraordinary gatherings for curious minds.</h1>
+            <p className="text-base sm:text-lg text-stone-600 leading-relaxed font-normal">Discover verified developer summits, acoustic indie evenings, founder pitch conclaves, and art retreats across Bengaluru, Mumbai, and Delhi NCR.</p>
           </div>
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">
@@ -164,13 +155,8 @@ export default function Home() {
               const color = getCategoryColor(id)
               return (
                 // category
-                <Link
-                  key={event._id}
-                  to="/explore"
-                  className="p-4 rounded-2xl bg-white border border-[#EBE8DF] hover:border-[#D5D0C2] hover:shadow-subtle transition-all duration-200 group flex flex-col justify-between">
-                  <div className={`w-10 h-10 rounded-xl border flex items-center justify-center mb-3 transition-all duration-200  text-lg ${color.icon}`}>
-                    {eventIcon(icon)}
-                  </div>
+                <Link key={event._id} to="/explore" className="p-4 rounded-2xl bg-white border border-[#EBE8DF] hover:border-[#D5D0C2] hover:shadow-subtle transition-all duration-200 group flex flex-col justify-between">
+                  <div className={`w-10 h-10 rounded-xl border flex items-center justify-center mb-3 transition-all duration-200  text-lg ${color.icon}`}>{eventIcon(icon)}</div>
                   {/* Event type and number of event */}
                   <div>
                     <p className={`text-xs font-boldleading-snug transition-colors ${color.text}`}>{event.name}</p>
@@ -195,9 +181,7 @@ export default function Home() {
               <p className="text-xs text-stone-500">Verified community events happening in the coming days</p>
             </div>
             {/* explore event button */}
-            <Link
-              to="/explore"
-              className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap px-3 py-1.5 text-xs rounded-lg font-medium border border-[#CCC8BA] bg-transparent hover:bg-[#F2F1EC] text-[#222]">
+            <Link to="/explore" className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap px-3 py-1.5 text-xs rounded-lg font-medium border border-[#CCC8BA] bg-transparent hover:bg-[#F2F1EC] text-[#222]">
               <span>View All Events</span>
               <span>→</span>
             </Link>
@@ -242,21 +226,14 @@ export default function Home() {
           <div className="max-w-xl space-y-3">
             <span className="text-xs font-bold uppercase tracking-wider text-[#FF8A65]">Empowering Community Hosts</span>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">Host your next summit, workshop or indie showcase on EventSphere.</h2>
-            <p className="text-sm text-stone-300 leading-relaxed">
-              Every registered user can organize events. Enjoy seamless ticketing, automatic calendar syncing, verified attendee reviews, and real-time
-              dashboard analytics.
-            </p>
+            <p className="text-sm text-stone-300 leading-relaxed">Every registered user can organize events. Enjoy seamless ticketing, automatic calendar syncing, verified attendee reviews, and real-time dashboard analytics.</p>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
-            <Link
-              to="/create-event"
-              className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold px-5 py-2.5 text-base rounded-xl bg-[#E65100] text-white hover:bg-[#D84315] w-full sm:w-auto shadow-lg">
+            <Link to="/create-event" className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold px-5 py-2.5 text-base rounded-xl bg-[#E65100] text-white hover:bg-[#D84315] w-full sm:w-auto shadow-lg">
               Create Event Now
             </Link>
-            <Link
-              to="/profile"
-              className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold px-5 py-2.5 text-base rounded-xl w-full sm:w-auto bg-white/10 text-white border border-white/20 hover:bg-white/20">
+            <Link to="/profile" className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold px-5 py-2.5 text-base rounded-xl w-full sm:w-auto bg-white/10 text-white border border-white/20 hover:bg-white/20">
               Organizer Portal
             </Link>
           </div>

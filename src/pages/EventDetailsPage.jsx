@@ -1,4 +1,5 @@
 import EventReviewSection from "#components/events/EventReviewSection"
+import api from "#lib/axios"
 import { formatEventDate, formatEventTimeRange, formatPrice, getDaysRemaining } from "#lib/utils"
 import axios from "axios"
 import { Bookmark, Calendar, CheckCircle2, ChevronLeft, Clock2Icon, Dot, LinkIcon, LucideLocationEdit, MapPin, Shield, Sparkles, Users } from "lucide-react"
@@ -21,14 +22,10 @@ export default function EventDetailsPage() {
   useEffect(() => {
     async function GetEventDetail() {
       try {
-        let {
-          data: { data },
-        } = await axios.get(`https://eventsphere-server-mfdb.onrender.com/api/events/${id}`)
-        setEvent(data)
+         let data = await api.get(`/api/events/${id}`)
+         setEvent(data)
 
-        let {
-          data: { data: reviews },
-        } = await axios.get(`https://eventsphere-server-mfdb.onrender.com/api/events/${data.id || data._id}/reviews`)
+         let reviews = await api.get(`/api/events/${data.id || data._id}/reviews`)
         setReviews(reviews)
       } catch (err) {
         console.error(err)
