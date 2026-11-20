@@ -8,16 +8,22 @@ import { toast } from "sonner"
 const Modes = { "in-person": "In-Person Gathering", online: "Online Conclave", hybrid: "Hybrid Format" }
 
 export default function EventDetailsPage() {
+  //share the link to clipboard
   function shareLink() {
     navigator.clipboard.writeText(window.location.href)
     toast.success("copy to clipboard", { duration: 1000 })
   }
+  //use state to store the variables
   const [isLoading, setIsLoading] = useState(true)
   const [event, setEvent] = useState({})
   const [reviews, setReviews] = useState([])
+
+  //seat booking fraction for progress bar
   const seatBookFraction = `${(event?.registeredCount / event.capacity) * 100}%`
 
   const { id } = useParams()
+
+  //useeffect for fetching data from the api and set the state variables
   useEffect(() => {
     async function GetEventDetail() {
       try {
@@ -34,8 +40,9 @@ export default function EventDetailsPage() {
     if (id) {
       GetEventDetail()
     }
-  }, [])
+  }, [id])
 
+  //show loading skeleton while fetching data
   if (isLoading) {
     return (
       <div className="max-w-6xl mx-auto px-4 py-16 space-y-8 animate-pulse">
@@ -52,6 +59,8 @@ export default function EventDetailsPage() {
       </div>
     )
   }
+  
+  //main page 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 pb-24">
       {/* Back button */}
