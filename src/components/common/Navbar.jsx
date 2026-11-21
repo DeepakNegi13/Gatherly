@@ -78,7 +78,9 @@ function Navbar() {
             <Link to="/favorites" className="px-3.5 py-2 text-sm font-medium rounded-xl transition-colors inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 hover:bg-black/3">
               <Bookmark className="w-4 h-4" />
               <span>Saved</span>
-             { (favorites.length!=0) && <span className="w-5 h-5 rounded-full bg-orange-100 text-[#E65100] text-[11px] font-bold flex items-center justify-center">{favorites.length}</span>}
+              {favorites.length != 0 ?
+                <span className="w-5 h-5 rounded-full bg-orange-100 text-[#E65100] text-[11px] font-bold flex items-center justify-center">{favorites.length}</span>
+              : <span className="bg-transparent w-5 h-5 rounded-full text-transparent text-[11px] font-bold flex items-center justify-center">{favorites.length}</span>}
             </Link>
 
             <Link to="/profile" className="px-3.5 py-2 text-sm font-medium rounded-xl transition-colors inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 hover:bg-black/3">
