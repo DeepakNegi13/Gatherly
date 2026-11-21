@@ -1,14 +1,13 @@
 import EventCard from "#components/events/EventCard"
+import { Button } from "@base-ui/react/button"
 import { clearFavorite } from "../store/slices/favoriteSlice"
-
-
 import { useDispatch, useSelector } from "react-redux"
-
-
+import { Link } from "react-router-dom"
+import { Bookmark } from "lucide-react"
 export default function FavoritesPage() {
   const events = useSelector(state => state.favorite.items)
   const dispatch = useDispatch()
-  const clearAll = ()=>{
+  const clearAll = () => {
     dispatch(clearFavorite())
   }
   return (
@@ -24,13 +23,27 @@ export default function FavoritesPage() {
           Clear All
         </button>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {events.map(event => {
-          return (
-            <EventCard event={event} />
-          )
-        })}
-      </div>
+      {events.length == 0 ?
+        <div className="bg-white rounded-3xl border border-[#EBE8DF] p-12 text-center max-w-lg mx-auto space-y-4 shadow-subtle">
+          <div className="w-14 h-14 bg-orange-50 text-[#E65100] rounded-2xl flex items-center justify-center mx-auto border border-orange-100">
+            <Bookmark className="w-7 h-7" />
+          </div>
+          <div className="space-y-1">
+            <h3 className="font-bold text-base text-stone-900">Your collection is empty</h3>
+            <p className="text-xs text-stone-500">Bookmark events you find intriguing so you can quickly access or register later.</p>
+          </div>
+          <Link to="/explore">
+            <Button variant="primary" size="sm">
+              Discover Gatherings
+            </Button>
+          </Link>
+        </div>
+      : <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {events.map(event => {
+            return <EventCard event={event} />
+          })}
+        </div>
+      }
     </div>
   )
 }
