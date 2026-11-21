@@ -6,6 +6,7 @@ import Homepage from "./pages/Homepage"
 import { useEffect } from "react"
 import EventDetailsPage from "./pages/EventDetailsPage"
 import { Toaster } from "sonner"
+import FavoritesPage from "./pages/FavoritePage"
 // after go to next url the screen is scroll to top
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -22,6 +23,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="events/:id" element={<EventDetailsPage />} />
+          <Route path="/favorites" element={<FavoritesPage/>}/>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
