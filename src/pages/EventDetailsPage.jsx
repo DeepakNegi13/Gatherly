@@ -1,9 +1,9 @@
 import EventReviewSection from "#components/events/EventReviewSection"
 import api from "#lib/axios"
-import { formatEventDate, formatEventTimeRange, formatPrice, getDaysRemaining } from "#lib/utils"
+import { formatEventDate, formatEventTimeRange, formatPrice, getDaysRemaining, handleFavorite } from "#lib/utils"
 import { Bookmark, Calendar, CheckCircle2, ChevronLeft, Clock2Icon, Dot, LinkIcon, LucideLocationEdit, MapPin, Shield, Sparkles, Users } from "lucide-react"
 import { useEffect, useState } from "react"
-import {useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Link, useParams } from "react-router"
 const Modes = { "in-person": "In-Person Gathering", online: "Online Conclave", hybrid: "Hybrid Format" }
 
@@ -21,17 +21,18 @@ export default function EventDetailsPage() {
   const seatBookFraction = `${(event?.registeredCount / event.capacity) * 100}%`
 
   const { id } = useParams()
+  const dispatch = useDispatch()
 
-   const isFavorite = useSelector(state => state.favorite.items.some(e => (e._id || e.id) === (event.id || event._id)))
+  const isFavorite = useSelector(state => state.favorite.items.some(e => (e._id || e.id) === (event.id || event._id)))
 
   //useeffect for fetching data from the api and set the state variables
   useEffect(() => {
     async function GetEventDetail() {
       try {
-         let data = await api.get(`/api/events/${id}`)
-         setEvent(data)
+        let data = await api.get(`/api/events/${id}`)
+        setEvent(data)
 
-         let reviews = await api.get(`/api/events/${data.id || data._id}/reviews`)
+        let reviews = await api.get(`/api/events/${data.id || data._id}/reviews`)
         setReviews(reviews)
       } catch (err) {
         console.error(err)
@@ -60,8 +61,8 @@ export default function EventDetailsPage() {
       </div>
     )
   }
-  
-  //main page 
+
+  //main page
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 pb-24">
       {/* Back button */}
@@ -82,7 +83,7 @@ export default function EventDetailsPage() {
             <span>Share</span>
           </button>
 
-          <button type="button" onClick={e => isFavorite(e)} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${isFavorite ? "bg-orange-50 border-orange-200 text-[#E65100]" : "bg-white border-[#DDD9CE] hover:bg-stone-50 text-stone-700"}`}>
+          <button type="button" onClick={e => handleFavorite(e, event, dispatch, isFavorite)} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${isFavorite ? "bg-orange-50 border-orange-200 text-[#E65100]" : "bg-white border-[#DDD9CE] hover:bg-stone-50 text-stone-700"}`}>
             <Bookmark className={`w-3.5 h-3.5 ${isFavorite ? "fill-[#E65100]" : ""}`} />
             <span>{isFavorite ? "Saved" : "Save"}</span>
           </button>
