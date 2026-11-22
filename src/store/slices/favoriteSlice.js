@@ -6,7 +6,7 @@ const favoriteSlice = createSlice({
   reducers: {
     toggleFavorite(state, action) {
       const event = action.payload
-      const existingEvent = state.items.find(e => (e._id || e.id) === (event.id || event._id))
+      const existingEvent = state.items.some(e => (e._id || e.id) === (event.id || event._id))
       if (existingEvent) {
         state.items = state.items.filter(e => (e._id || e.id) != (event.id || event._id))
         toast.error("Event removed from saved section", { duration: 1000 })
