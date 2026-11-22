@@ -1,5 +1,7 @@
 export { cn } from "cn"
+import { toggleFavorite } from "../store/slices/favoriteSlice"
 import { format, formatDistanceToNow, parseISO } from "date-fns"
+import { toast } from "sonner"
 export function formatPrice(price, currency = "INR") {
   const val = Number(price)
   if (!val) return "FREE"
@@ -27,6 +29,16 @@ export function formatEventTimeRange(startDate, endDate) {
   const endTime = format(end, "h:mm a")
 
   return `${startTime} - ${endTime}`
+}
+
+export function handleFavorite(e, event, dispatch, isFavorite) {
+  e.preventDefault()
+  dispatch(toggleFavorite(event))
+  if (isFavorite) {
+    toast.info(`Removed "${event?.title}" from saved events`)
+  } else {
+    toast.success(`Saved "${event?.title}" to your collection!`)
+  }
 }
 
 export function getDaysRemaining(startDate) {

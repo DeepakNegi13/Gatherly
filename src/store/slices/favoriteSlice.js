@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { toast } from "sonner"
 const favoriteSlice = createSlice({
   name: "favorite",
   initialState: { items: [] },
@@ -9,10 +8,8 @@ const favoriteSlice = createSlice({
       const existingEvent = state.items.some(e => (e._id || e.id) === (event.id || event._id))
       if (existingEvent) {
         state.items = state.items.filter(e => (e._id || e.id) != (event.id || event._id))
-        toast.error("Event removed from saved section", { duration: 1000 })
       } else {
         state.items.push(action.payload)
-        toast.success("Event Saved Succesfully", { duration: 1000 })
       }
     },
     removeFavorite() {},

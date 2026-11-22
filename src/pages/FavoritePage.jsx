@@ -9,7 +9,6 @@ export default function FavoritesPage() {
   const dispatch = useDispatch()
   const clearAll = () => {
     const confirm = window.confirm("This steps clear all the saved events")
-    console.log(confirm)
     confirm && dispatch(clearFavorite())
   }
   return (
