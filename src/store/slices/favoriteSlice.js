@@ -11,13 +11,12 @@ const favoriteSlice = createSlice({
       } else {
         state.items.push(action.payload)
       }
+      localStorage.setItem("eventsphere-favorites", JSON.stringify(state.items))
     },
     removeFavorite() {},
     clearFavorite(state) {
-      let actualLength = state.items.length
-      for (let i = 0; i < actualLength; i++) {
-        state.items.pop()
-      }
+      state.items = []
+      localStorage.clear("eventsphere-favorites")
     },
   },
 })
