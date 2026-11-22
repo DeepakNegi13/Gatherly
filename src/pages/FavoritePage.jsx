@@ -1,5 +1,5 @@
 import EventCard from "#components/events/EventCard"
-import { Button } from "@base-ui/react/button"
+import { Button } from "../components/ui/Button"
 import { clearFavorite } from "../store/slices/favoriteSlice"
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
@@ -8,7 +8,9 @@ export default function FavoritesPage() {
   const events = useSelector(state => state.favorite.items)
   const dispatch = useDispatch()
   const clearAll = () => {
-    dispatch(clearFavorite())
+    const confirm = window.confirm("This steps clear all the saved events")
+    console.log(confirm)
+    confirm && dispatch(clearFavorite())
   }
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 pb-24">
@@ -19,7 +21,7 @@ export default function FavoritesPage() {
           <p className="text-sm text-stone-600">Bookmarked conclaves, summits, and performances to revisit anytime.</p>
         </div>
         {events.length != 0 && (
-          <button type="button" className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg text-xs font-medium px-3 py-1.5 border border-[#CCC8BA] bg-transparent hover:bg-[#F2F1EC] text-stone-500 hover:text-rose-600" onClick={clearAll}>
+          <button type="button" size="sm" variant="outline" className="text-stone-500 hover:text-rose-600" onClick={clearAll}>
             Clear All
           </button>
         )}
