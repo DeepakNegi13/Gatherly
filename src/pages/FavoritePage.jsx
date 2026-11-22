@@ -18,10 +18,11 @@ export default function FavoritesPage() {
           <h1 className="text-3xl font-extrabold text-[#111] tracking-tight">Saved Collections</h1>
           <p className="text-sm text-stone-600">Bookmarked conclaves, summits, and performances to revisit anytime.</p>
         </div>
-
-        <button type="button" className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg text-xs font-medium px-3 py-1.5 border border-[#CCC8BA] bg-transparent hover:bg-[#F2F1EC] text-stone-500 hover:text-rose-600" onClick={clearAll}>
-          Clear All
-        </button>
+        {events.length != 0 && (
+          <button type="button" className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg text-xs font-medium px-3 py-1.5 border border-[#CCC8BA] bg-transparent hover:bg-[#F2F1EC] text-stone-500 hover:text-rose-600" onClick={clearAll}>
+            Clear All
+          </button>
+        )}
       </div>
       {events.length == 0 ?
         <div className="bg-white rounded-3xl border border-[#EBE8DF] p-12 text-center max-w-lg mx-auto space-y-4 shadow-subtle">
