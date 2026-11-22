@@ -3,6 +3,7 @@ import api from "#lib/axios"
 import { formatEventDate, formatEventTimeRange, formatPrice, getDaysRemaining } from "#lib/utils"
 import { Bookmark, Calendar, CheckCircle2, ChevronLeft, Clock2Icon, Dot, LinkIcon, LucideLocationEdit, MapPin, Shield, Sparkles, Users } from "lucide-react"
 import { useEffect, useState } from "react"
+import {useSelector } from "react-redux"
 import { Link, useParams } from "react-router"
 const Modes = { "in-person": "In-Person Gathering", online: "Online Conclave", hybrid: "Hybrid Format" }
 
@@ -20,6 +21,8 @@ export default function EventDetailsPage() {
   const seatBookFraction = `${(event?.registeredCount / event.capacity) * 100}%`
 
   const { id } = useParams()
+
+   const isFavorite = useSelector(state => state.favorite.items.some(e => (e._id || e.id) === (event.id || event._id)))
 
   //useeffect for fetching data from the api and set the state variables
   useEffect(() => {
@@ -75,13 +78,13 @@ export default function EventDetailsPage() {
             }}
             type="button"
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#DDD9CE] bg-white hover:bg-stone-50 text-xs font-medium text-stone-700 transition-all cursor-pointer">
-            <LinkIcon />
+            <LinkIcon className="w-3.5 h-3.5" />
             <span>Share</span>
           </button>
 
-          <button type="button" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer bg-white border-[#DDD9CE] hover:bg-stone-50 text-stone-700">
-            <Bookmark />
-            <span>Save</span>
+          <button type="button" onClick={e => isFavorite(e)} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${isFavorite ? "bg-orange-50 border-orange-200 text-[#E65100]" : "bg-white border-[#DDD9CE] hover:bg-stone-50 text-stone-700"}`}>
+            <Bookmark className={`w-3.5 h-3.5 ${isFavorite ? "fill-[#E65100]" : ""}`} />
+            <span>{isFavorite ? "Saved" : "Save"}</span>
           </button>
         </div>
       </div>
