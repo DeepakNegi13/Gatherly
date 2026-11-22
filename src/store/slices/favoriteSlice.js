@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 const favoriteSlice = createSlice({
   name: "favorite",
-  initialState: { items: [] },
+  initialState: { items: JSON.parse(localStorage.getItem("eventsphere-favorites")) || [] },
   reducers: {
     toggleFavorite(state, action) {
       const event = action.payload
