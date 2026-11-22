@@ -4,14 +4,12 @@ import { formatEventDate, formatEventTimeRange, formatPrice, getDaysRemaining } 
 import { Bookmark, Calendar, CheckCircle2, ChevronLeft, Clock2Icon, Dot, LinkIcon, LucideLocationEdit, MapPin, Shield, Sparkles, Users } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router"
-import { toast } from "sonner"
 const Modes = { "in-person": "In-Person Gathering", online: "Online Conclave", hybrid: "Hybrid Format" }
 
 export default function EventDetailsPage() {
   //share the link to clipboard
   function shareLink() {
     navigator.clipboard.writeText(window.location.href)
-    toast.success("copy to clipboard", { duration: 1000 })
   }
   //use state to store the variables
   const [isLoading, setIsLoading] = useState(true)

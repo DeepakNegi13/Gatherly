@@ -3,12 +3,16 @@ import { toggleFavorite } from "../../store/slices/favoriteSlice"
 import { Bookmark, Calendar } from "lucide-react"
 import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
+import { toast } from "sonner"
 
 function EventCard({ event }) {
   const dispatch = useDispatch()
+  
   const savedCards = e => {
     e.preventDefault()
     dispatch(toggleFavorite(event))
+   
+    
   }
 
   return (
