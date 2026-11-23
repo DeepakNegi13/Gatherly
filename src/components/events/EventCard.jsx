@@ -4,13 +4,16 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 
 function EventCard({ event }) {
+  // Dispatch bookmark actions and subscribe to whether this event is already saved.
   const dispatch = useDispatch()
 
   const isFavorite = useSelector(state => state.favorite.items.some(e => (e._id || e.id) === (event.id || event._id)))
 
   return (
+    // The entire card navigates to the event details route.
     <Link key={event._id} to={`/events/${event.slug}`} className="group bg-white rounded-2xl border border-[#EAE7DC] overflow-hidden flex flex-col justify-between shadow-[0_2px_8px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_24px_-8px_rgba(0,0,0,0.08)] hover:border-[#D5D0C2] hover:-translate-y-0.5 transition-all duration-300">
       <div>
+        {/* Image and category overlay are kept separate from the text content. */}
         <div className="relative aspect-16/10 overflow-hidden bg-stone-100">
           <img src={event.image} alt="Next-Gen React & Server Components Summit" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
           <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">

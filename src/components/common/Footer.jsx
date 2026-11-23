@@ -2,9 +2,11 @@ import { ShieldCheck } from "lucide-react"
 import { Link } from "react-router-dom"
 import { GatherlyLogo } from "../../assets/icons/GatherlyLogo"
 function Footer() {
+  // Footer provides persistent discovery links and platform trust information.
   return (
     <footer className="bg-[#181816] text-[#E5E3DC] pt-16 pb-12 border-t border-[#2B2A27]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Main footer columns separate brand trust, city hubs, and platform destinations. */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-[#2C2B27]">
           <div className="lg:col-span-2 space-y-4">
             <Link to="/" className="flex items-center gap-2.5">

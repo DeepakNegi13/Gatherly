@@ -30,14 +30,17 @@ export default function EventDetailsPage() {
   useEffect(() => {
     async function GetEventDetail() {
       try {
+        // Resolve event content first because the review endpoint uses the event ID.
         let {data} = await api.get(`/api/events/${id}`)
         setEvent(data)
 
+        // Fetch attendee feedback only after event data establishes the correct record ID.
         let {data:reviews} = await api.get(`/api/events/${data.id || data._id}/reviews`)
         setReviews(reviews)
       } catch (err) {
         console.error(err)
       }
+      // End the loading view even after a successful or failed API request.
       setIsLoading(false)
     }
     if (id) {

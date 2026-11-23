@@ -10,6 +10,7 @@ export function formatPrice(price, currency = "INR") {
   return new Intl.NumberFormat("en-IN", { style: "currency", currency, maximumFractionDigits: 0 }).format(val)
 }
 export function formatEventDate(dateInput) {
+  // Avoid parsing invalid or unavailable API date values.
   if (dateInput == null || dateInput == undefined) {
     return
   }
@@ -18,6 +19,7 @@ export function formatEventDate(dateInput) {
 }
 
 export function formatEventTimeRange(startDate, endDate) {
+  // Return nothing until both start and end timestamps are available.
   if (!startDate || !endDate) {
     return
   }
@@ -34,6 +36,7 @@ export function formatEventTimeRange(startDate, endDate) {
 }
 
 export function handleFavorite(e, event, dispatch, isFavorite) {
+  // Prevent link/card navigation because the bookmark button is inside a link.
   e.preventDefault()
   dispatch(toggleFavorite(event))
   if (isFavorite) {
@@ -44,6 +47,7 @@ export function handleFavorite(e, event, dispatch, isFavorite) {
 }
 
 export function getDaysRemaining(startDate) {
+  // An event with no starting date should not receive a countdown label.
   if (!startDate) {
     return
   }

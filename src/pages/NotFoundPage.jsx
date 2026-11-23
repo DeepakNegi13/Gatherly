@@ -4,6 +4,7 @@ import { Compass, Home } from "lucide-react";
 import { Link } from "react-router";
 
 function NotFound() {
+	// This page handles unmatched routes and gives users routes back into the application.
 	return (
 		<div className="min-h-[70vh] flex items-center justify-center px-4 py-16">
 			<div className="max-w-md w-full bg-white rounded-3xl border border-[#EBE8DF] p-8 text-center space-y-5 shadow-subtle">

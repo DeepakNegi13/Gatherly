@@ -6,7 +6,9 @@ import { Link } from "react-router"
 import { useSelector } from "react-redux"
 
 function Navbar() {
+  // Track the mobile navigation panel separately from desktop navigation.
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  // The saved-event count is read live from Redux and updates in the desktop navigation.
   const favorites = useSelector(state => state.favorite.items)
   return (
     <div className="sticky top-0 z-40 w-full bg-[#FAF9F5]/90 backdrop-blur-md border-b border-[#EBE8DF] ">

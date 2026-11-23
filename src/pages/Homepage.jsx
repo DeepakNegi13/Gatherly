@@ -6,6 +6,8 @@ import { Link } from "react-router-dom"
 import EventCard from "#components/events/EventCard"
 import Skeleton from "#components/common/Skeleton"
 import api from "#lib/axios"
+
+// Curated hub imagery and labels are used as promotional navigation cards.
 const hubCities = [
   { Url: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=500&q=80", name: "Bengaluru" },
   { Url: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=500&q=80", name: "Mumbai" },
@@ -48,6 +50,7 @@ export default function Home() {
   // Fetch homepage collections in parallel when the page mounts.
   useEffect(() => {
     async function getFeaturedEvents() {
+      // Load the carousel's spotlight events.
       setIsLoading(true)
       try {
         let {data} = await api.get("/api/events/featured")
@@ -58,7 +61,9 @@ export default function Home() {
         setIsLoading(false)
       }
     }
+    // Trigger all homepage requests independently.
     async function getEventCategory() {
+      // Load category cards and their associated event counts.
       setIsLoading(true)
       try {
         let {data} = await api.get("/api/categories")
@@ -70,6 +75,7 @@ export default function Home() {
       }
     }
     async function getUpcomingEvent() {
+      // Load a limited, chronologically ordered list for the upcoming section.
       setIsLoading(true)
       try {
         let {data} = await api.get("/api/events?limit=8&sort=startDate&order=asc")

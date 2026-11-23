@@ -3,6 +3,7 @@
 @import "../node_modules/tw-animate-css/dist/tw-animate.css";
 @import "../node_modules/shadcn/dist/tailwind.css";
 
+/* Base reset: apply pointer behavior and Gatherly's global theme variables. */
 @layer base {
     button:not(:disabled),
     [role="button"]:not(:disabled) {
@@ -35,7 +36,7 @@
     }
 }
 
-/* Custom Scrollbar */
+/* Custom scrollbar: maintain compact, warm-neutral scrolling across the app. */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -54,21 +55,21 @@
     background: #b8b5a8;
 }
 
-/* Editorial badge styling */
+/* Editorial badge styling: add tracking and visual hierarchy to uppercase labels. */
 .badge-editorial {
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     letter-spacing: 0.04em;
     text-transform: uppercase;
 }
 
-/* Grain / paper subtle effect */
+/* Grain/paper texture: add a subtle tactile background to feature surfaces. */
 .paper-texture {
     background-color: #faf9f5;
     background-image: radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 0);
     background-size: 24px 24px;
 }
 
-/* Day Picker Calendar Custom Styles */
+/* Day picker overrides: align calendar selected and today states with Gatherly orange. */
 .rdp,
 .rdp-root {
     --rdp-cell-size: 38px;
@@ -88,6 +89,7 @@
 .rdp-today {
     border-bottom: 2px solid #e65100;
 }
+/* Embla carousel primitives: control clipping, horizontal slides, and touch gestures. */
 .embla__viewport {
     overflow: hidden;
 }

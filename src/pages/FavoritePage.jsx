@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { Bookmark } from "lucide-react"
 export default function FavoritesPage() {
+  // Favorites are derived directly from Redux, keeping all saved-event screens synchronized.
   // Read saved event objects and dispatch actions through the Redux favorites store.
   const events = useSelector(state => state.favorite.items)
   const dispatch = useDispatch()
@@ -14,6 +15,7 @@ export default function FavoritesPage() {
     confirm && dispatch(clearFavorite())
   }
   return (
+    // Saved collections use the same card component as discovery pages.
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 pb-24">
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#EBE8DF] pb-6">
@@ -27,6 +29,7 @@ export default function FavoritesPage() {
           </button>
         )}
       </div>
+      {/* Favorited events are rendered directly without an additional API request. */}
       {events.length == 0 ?
         <div className="bg-white rounded-3xl border border-[#EBE8DF] p-12 text-center max-w-lg mx-auto space-y-4 shadow-subtle">
           <div className="w-14 h-14 bg-orange-50 text-[#E65100] rounded-2xl flex items-center justify-center mx-auto border border-orange-100">

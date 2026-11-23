@@ -8,10 +8,12 @@ import { Badge } from "../ui/badge"
 import { formatPrice, formatEventDate } from "../../lib/utils"
 
 export function FeaturedCarousel({ events = [] }) {
+  // selectedIndex mirrors Embla's active slide for custom pagination dots.
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true, rootNode: emblaRoot => emblaRoot.parentElement }),
   ])
+  // Direct dot navigation jumps to the matching Embla slide index.
   const scrollTo = i => {
     emblaApi.scrollTo(i)
   }

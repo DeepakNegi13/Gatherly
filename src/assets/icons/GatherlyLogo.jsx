@@ -3,6 +3,7 @@ export function GatherlyLogo({
   width = "176",
   height = "40",
 }) {
+  // Inline SVG keeps the brand logo crisp and allows inherited text colors.
   return (
     <svg
       className={className}

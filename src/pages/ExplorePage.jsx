@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 export default function ExplorePage() {
+  // Events and pagination state are kept together so the screen can append or replace results.
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -16,6 +17,7 @@ export default function ExplorePage() {
   });
 
   async function fetchEvents(page = 1, append = false) {
+    // Show the initial skeleton for page one and a footer state for later pages.
     if (page === 1) {
       setIsLoading(true);
     } else {
@@ -33,7 +35,7 @@ export default function ExplorePage() {
       }
 
       setPagination(pagination)
-    } catch (error) {}
+    } catch (error) {console.log(error)}
 
     setIsLoading(false);
     setIsLoadingMore(false);
@@ -41,14 +43,17 @@ export default function ExplorePage() {
 
 
   useEffect(() => {
+    // Fetch the first page once after the Explore route mounts.
     fetchEvents(1, false)
   }, [])
 
   const { ref: observerRef, inView } = useInView({ threshold: 0.5 })
 
   useEffect(() => {
+    // Only request another page after the sentinel is visible and pagination confirms availability.
     if (inView && pagination.hasMore && !isLoading && !isLoadingMore) {
       let timer = setTimeout(() => {
+        // Delay briefly so loading feedback can render before the API request.
         fetchEvents(pagination.page + 1, true)
       }, 200)
 
@@ -226,6 +231,7 @@ export default function ExplorePage() {
           }
         </div>
       </div>
+      {/* The intersection sentinel triggers the next API page when it enters the viewport. */}
       {/* Bottom indicator */}
       <div ref={observerRef} className="py-6 flex justify-center ">
           {pagination.hasMore && (

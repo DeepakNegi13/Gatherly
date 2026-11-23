@@ -2,6 +2,7 @@ import { formatDistanceToNow, parseISO } from "date-fns"
 import { MessageSquare, Star } from "lucide-react"
 
 export default function EventReviewSection({ reviews, averageRating, numReviews }) {
+  // Authentication is currently simulated, so submission stays hidden until sign-in support exists.
   const isAuthenticated = false
   return (
     <section className="bg-white rounded-3xl border border-[#EBE8DF] p-6 sm:p-8 shadow-subtle space-y-6">
@@ -50,6 +51,7 @@ export default function EventReviewSection({ reviews, averageRating, numReviews 
         </div>
       }
 
+      {/* Reviews are shown oldest-to-newest based on the API response order. */}
       {/* Reviews List */}
       <div className="space-y-4">
         {reviews.length === 0 ?

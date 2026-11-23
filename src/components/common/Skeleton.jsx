@@ -1,4 +1,5 @@
 export default function Skeleton() {
+  // A responsive placeholder mirrors the final event-card dimensions during loading.
   return (
     <div className="bg-white rounded-2xl border border-[#EAE7DC] overflow-hidden flex flex-col shadow-subtle">
       <div className="animate-pulse rounded-lg bg-[#EAE8DF]/80 w-full aspect-16/10" />
