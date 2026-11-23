@@ -3,17 +3,18 @@ import EventCard from "#components/events/EventCard"
 import api from "#lib/axios"
 import { Bookmark, Calendar, MapPin, RefreshCcw, Search, X } from "lucide-react"
 import { useEffect, useState } from "react"
+import { useInView } from "react-intersection-observer"
 
 export default function ExplorePage() {
+  const { ref, inView } = useInView()
   const [isLoading, setIsLoading] = useState(true)
   const [events, setEvents] = useState([])
   useEffect(() => {
     const GetEventDetail = async () => {
       try {
-        const events = await api.get("https://eventsphere-server-mfdb.onrender.com/api/events")
+        const events = await api.get("/api/events")
         setEvents(events)
-        console.log(events)
-        isLoading(false)
+        setIsLoading(false)
       } catch (e) {
         console.log(e)
         setIsLoading(true)
@@ -184,7 +185,7 @@ export default function ExplorePage() {
       <div className="space-y-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {isLoading ?
-            [...Array(8)].map(() => <Skeleton />)
+            [...Array(8)].map((_, id) => <Skeleton key={id} />)
           : events.map(event => {
               return <EventCard key={event._id || event.id} event={event} />
             })
@@ -192,10 +193,8 @@ export default function ExplorePage() {
         </div>
       </div>
       {/* Bottom indicator */}
-      <div className="py-6 flex justify-center">
-        <div className="flex items-center gap-2 text-xs text-stone-400">
-          <span>Showing all 4 results for this filter</span>
-        </div>
+      <div className="py-6 flex justify-center" ref={ref}>
+        <h2>{`Header inside viewport ${inView}.`}</h2>
       </div>
     </div>
   )
