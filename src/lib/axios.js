@@ -1,7 +1,10 @@
 import axios from "axios"
+
+// Shared API client keeps the server URL and authentication behavior consistent.
 const api = axios.create({ baseURL: "https://eventsphere-server-mfdb.onrender.com" })
 api.interceptors.request.use(
   req => {
+    // Attach the project API token to every outgoing HTTP request.
     req.headers.token = "secret-token"
     return req
   },
@@ -12,7 +15,7 @@ api.interceptors.request.use(
 )
 api.interceptors.response.use(
   response => {
-    return response.data.data
+    return response.data
   },
   error => {
     console.error(error)

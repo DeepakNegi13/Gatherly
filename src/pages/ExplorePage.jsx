@@ -1,78 +1,60 @@
-import Skeleton from "#components/common/Skeleton"
-import EventCard from "#components/events/EventCard"
-import api from "#lib/axios"
-import { Bookmark, Calendar, MapPin, RefreshCcw, Search, X } from "lucide-react"
-import { useCallback, useEffect, useRef, useState } from "react"
-import { useInView } from "react-intersection-observer"
-
-const PAGE_SIZE = 8
+import Skeleton from "#components/common/Skeleton";
+import api from "#lib/axios";
+import EventCard from "../components/events/EventCard";
+import { Bookmark, Calendar, MapPin, RefreshCcw, Search, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 
 export default function ExplorePage() {
-  // Observe the bottom marker to trigger pagination when it enters the viewport.
-  const { ref, inView } = useInView({ threshold: 0.1 })
+  const [events, setEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [pagination, setPagination] = useState({
+    page: 1,
+    total: 0,
+    hasMore: false,
+  });
 
-  // Track initial loading and loading-more states separately for the correct UI feedback.
-  const [isLoading, setIsLoading] = useState(true)
-  const [isLoadingMore, setIsLoadingMore] = useState(false)
-  const [events, setEvents] = useState([])
-
-  // Keep the current page and whether another API page is available.
-  const [page, setPage] = useState(1)
-  const [hasMore, setHasMore] = useState(true)
-
-  // Prevent concurrent requests from appending the same page more than once.
-  const isLoadingRef = useRef(false)
-
-  // Fetch one event page; append mode preserves the previous events and removes duplicates.
-  const getEventDetails = useCallback(async (pageNumber = 1, append = false) => {
-    if (isLoadingRef.current) return
-
-    isLoadingRef.current = true
-
-    try {
-      const nextEvents = await api.get(`/api/events?page=${pageNumber}&limit=${PAGE_SIZE}`)
-      const eventList = Array.isArray(nextEvents) ? nextEvents : []
-
-      setEvents(previousEvents => {
-        if (!append) return eventList
-
-        const existingIds = new Set(previousEvents.map(event => event._id || event.id))
-        const uniqueEvents = eventList.filter(event => !existingIds.has(event._id || event.id))
-        return [...previousEvents, ...uniqueEvents]
-      })
-      setPage(pageNumber)
-      setHasMore(eventList.length === PAGE_SIZE)
-    } catch (error) {
-      console.error(error)
-      if (!append) setEvents([])
-      setHasMore(false)
-    } finally {
-      isLoadingRef.current = false
-      setIsLoading(false)
-      setIsLoadingMore(false)
+  async function fetchEvents(page = 1, append = false) {
+    if (page === 1) {
+      setIsLoading(true);
+    } else {
+      setIsLoadingMore(true);
     }
+    try {
+       const { data: events, pagination } = await api.get(
+        `/api/events?page=${page}`,
+      );
+
+      if (append) {
+        setEvents(prev => [...prev, ...events])
+      } else {
+        setEvents(events)
+      }
+
+      setPagination(pagination)
+    } catch (error) {}
+
+    setIsLoading(false);
+    setIsLoadingMore(false);
+  }
+
+
+  useEffect(() => {
+    fetchEvents(1, false)
   }, [])
 
-  // Fetch the first event page after the Explore page mounts.
+  const { ref: observerRef, inView } = useInView({ threshold: 0.5 })
+
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      getEventDetails(1)
-    }, 0)
+    if (inView && pagination.hasMore && !isLoading && !isLoadingMore) {
+      let timer = setTimeout(() => {
+        fetchEvents(pagination.page + 1, true)
+      }, 200)
 
-    return () => clearTimeout(timeoutId)
-  }, [getEventDetails])
-
-  // Load the next page only while the bottom marker is visible and no request is active.
-  useEffect(() => {
-    if (inView && hasMore && !isLoading && !isLoadingMore) {
-      const timeoutId = setTimeout(() => {
-        setIsLoadingMore(true)
-        getEventDetails(page + 1, true)
-      }, 0)
-
-      return () => clearTimeout(timeoutId)
+      return () => clearTimeout(timer)
     }
-  }, [getEventDetails, inView, hasMore, isLoading, isLoadingMore, page])
+  }, [inView])
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 pb-20">
@@ -114,7 +96,7 @@ export default function ExplorePage() {
           <div className="relative">
             <button type="button" className="flex items-center gap-2 px-3 py-2 text-xs font-medium rounded-xl border transition-all cursor-pointer select-none bg-[#FAF9F5] border-[#DDD9CE] text-stone-700 hover:bg-stone-100">
               <span>
-                <Calendar />
+                <Calendar/>
               </span>
               <span>Filter by Date</span>
               <span className="text-stone-400 text-xs">▼</span>
@@ -245,9 +227,13 @@ export default function ExplorePage() {
         </div>
       </div>
       {/* Bottom indicator */}
-      <div className="py-6 flex justify-center" ref={ref}>
-        {isLoadingMore && <p className="text-sm text-stone-500">Loading more events...</p>}
-        {!isLoading && !isLoadingMore && !hasMore && events.length > 0 && <p className="text-sm text-stone-500">No more events</p>}
+      <div ref={observerRef} className="py-6 flex justify-center ">
+          {pagination.hasMore && (
+            <div className="flex items-center gap-2 text-xs text-stone-500">
+              <span className="w-4 h-4 border-2 border-[#E65100] border-t-transparent rounded-full animate-spin" />
+              <span>Unfolding more community gatherings...</span>
+            </div>
+          )}       
       </div>
     </div>
   )

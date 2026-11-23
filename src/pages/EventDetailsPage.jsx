@@ -30,10 +30,10 @@ export default function EventDetailsPage() {
   useEffect(() => {
     async function GetEventDetail() {
       try {
-        let data = await api.get(`/api/events/${id}`)
+        let {data} = await api.get(`/api/events/${id}`)
         setEvent(data)
 
-        let reviews = await api.get(`/api/events/${data.id || data._id}/reviews`)
+        let {data:reviews} = await api.get(`/api/events/${data.id || data._id}/reviews`)
         setReviews(reviews)
       } catch (err) {
         console.error(err)

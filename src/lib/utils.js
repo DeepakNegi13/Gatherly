@@ -2,6 +2,8 @@ export { cn } from "cn"
 import { toggleFavorite } from "../store/slices/favoriteSlice"
 import { format, formatDistanceToNow, parseISO } from "date-fns"
 import { toast } from "sonner"
+
+// Format prices in Indian currency while treating zero or missing prices as free.
 export function formatPrice(price, currency = "INR") {
   const val = Number(price)
   if (!val) return "FREE"

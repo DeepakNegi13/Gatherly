@@ -19,6 +19,7 @@ function eventIcon(iconName) {
   if (iconName === "") return <TagIcon />
   if (iconName === "palette") return <Palette />
   if (iconName === "briefcase") return <BriefcaseBusiness />
+  if (iconName === "map-pin") return <MapPin />
   if (iconName === "graduation-cap") return <GraduationCapIcon />
   if (iconName === "music") return <Music4 />
   if (iconName === "trophy") return <Trophy />
@@ -49,7 +50,7 @@ export default function Home() {
     async function getFeaturedEvents() {
       setIsLoading(true)
       try {
-        let data = await api.get("/api/events/featured")
+        let {data} = await api.get("/api/events/featured")
         setFeaturedEvents(data)
       } catch (error) {
         console.log(error)
@@ -60,7 +61,7 @@ export default function Home() {
     async function getEventCategory() {
       setIsLoading(true)
       try {
-        let data = await api.get("/api/categories")
+        let {data} = await api.get("/api/categories")
         setCategory(data)
       } catch (error) {
         console.log(error)
@@ -71,7 +72,7 @@ export default function Home() {
     async function getUpcomingEvent() {
       setIsLoading(true)
       try {
-        let data = await api.get("/api/events?limit=8&sort=startDate&order=asc")
+        let {data} = await api.get("/api/events?limit=8&sort=startDate&order=asc")
         setUpcomingEvents(data)
       } catch (error) {
         console.log(error)
