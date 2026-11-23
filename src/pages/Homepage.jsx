@@ -15,6 +15,7 @@ const hubCities = [
   { Url: "https://images.unsplash.com/photo-1627916607164-7b20241db935?auto=format&fit=crop&w=500&q=80", name: "Pune" },
 ]
 function eventIcon(iconName) {
+  // Map category icon names from the API to the matching Lucide icon.
   if (iconName === "") return <TagIcon />
   if (iconName === "palette") return <Palette />
   if (iconName === "briefcase") return <BriefcaseBusiness />
@@ -37,13 +38,13 @@ function getCategoryColor(i) {
   return colors[i % colors.length]
 }
 export default function Home() {
-  // all usestate element
+  // Store spotlight events, categories, upcoming events, and shared loading state.
   const [featuredEvents, setFeaturedEvents] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [category, setCategory] = useState([])
   const [upcomingEvents, setUpcomingEvents] = useState([])
 
-  // fetching data from api
+  // Fetch homepage collections in parallel when the page mounts.
   useEffect(() => {
     async function getFeaturedEvents() {
       setIsLoading(true)
@@ -150,7 +151,7 @@ export default function Home() {
             {category.map((event, id) => {
               const icon = event?.icon
 
-              //color is a object
+              // Assign a consistent color theme to each category by its grid position.
               const color = getCategoryColor(id)
               return (
                 // category

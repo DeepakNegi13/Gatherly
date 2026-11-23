@@ -8,18 +8,22 @@ import { useInView } from "react-intersection-observer"
 const PAGE_SIZE = 8
 
 export default function ExplorePage() {
-  //use inview hook
+  // Observe the bottom marker to trigger pagination when it enters the viewport.
   const { ref, inView } = useInView({ threshold: 0.1 })
+
+  // Track initial loading and loading-more states separately for the correct UI feedback.
   const [isLoading, setIsLoading] = useState(true)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
   const [events, setEvents] = useState([])
 
-  //for rendering more events on scroll
+  // Keep the current page and whether another API page is available.
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
+
+  // Prevent concurrent requests from appending the same page more than once.
   const isLoadingRef = useRef(false)
 
-  //get event details
+  // Fetch one event page; append mode preserves the previous events and removes duplicates.
   const getEventDetails = useCallback(async (pageNumber = 1, append = false) => {
     if (isLoadingRef.current) return
 
@@ -49,7 +53,7 @@ export default function ExplorePage() {
     }
   }, [])
 
-  //for first time render
+  // Fetch the first event page after the Explore page mounts.
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       getEventDetails(1)
@@ -58,7 +62,7 @@ export default function ExplorePage() {
     return () => clearTimeout(timeoutId)
   }, [getEventDetails])
 
-  //for exlore more events
+  // Load the next page only while the bottom marker is visible and no request is active.
   useEffect(() => {
     if (inView && hasMore && !isLoading && !isLoadingMore) {
       const timeoutId = setTimeout(() => {

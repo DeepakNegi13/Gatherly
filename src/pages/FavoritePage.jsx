@@ -5,9 +5,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { Bookmark } from "lucide-react"
 export default function FavoritesPage() {
+  // Read saved event objects and dispatch actions through the Redux favorites store.
   const events = useSelector(state => state.favorite.items)
   const dispatch = useDispatch()
   const clearAll = () => {
+    // Require user confirmation before removing every saved event.
     const confirm = window.confirm("This steps clear all the saved events")
     confirm && dispatch(clearFavorite())
   }

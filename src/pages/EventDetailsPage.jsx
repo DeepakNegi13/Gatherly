@@ -8,16 +8,17 @@ import { Link, useParams } from "react-router"
 const Modes = { "in-person": "In-Person Gathering", online: "Online Conclave", hybrid: "Hybrid Format" }
 
 export default function EventDetailsPage() {
-  //share the link to clipboard
+  // Copy the complete event URL so users can share the current event page.
   function shareLink() {
     navigator.clipboard.writeText(window.location.href)
   }
-  //use state to store the variables
+
+  // Keep event, review, and loading data for the details page.
   const [isLoading, setIsLoading] = useState(true)
   const [event, setEvent] = useState({})
   const [reviews, setReviews] = useState([])
 
-  //seat booking fraction for progress bar
+  // Convert registration data into a percentage for the seat capacity bar.
   const seatBookFraction = `${(event?.registeredCount / event.capacity) * 100}%`
 
   const { id } = useParams()
@@ -25,7 +26,7 @@ export default function EventDetailsPage() {
 
   const isFavorite = useSelector(state => state.favorite.items.some(e => (e._id || e.id) === (event.id || event._id)))
 
-  //useeffect for fetching data from the api and set the state variables
+  // Fetch event details and attendee reviews whenever the route event ID changes.
   useEffect(() => {
     async function GetEventDetail() {
       try {
