@@ -1,15 +1,23 @@
+import Skeleton from "#components/common/Skeleton"
 import EventCard from "#components/events/EventCard"
 import api from "#lib/axios"
 import { Bookmark, Calendar, MapPin, RefreshCcw, Search, X } from "lucide-react"
 import { useEffect, useState } from "react"
 
 export default function ExplorePage() {
+  const [isLoading, setIsLoading] = useState(true)
   const [events, setEvents] = useState([])
   useEffect(() => {
     const GetEventDetail = async () => {
-      const events = await api.get("https://eventsphere-server-mfdb.onrender.com/api/events")
-      setEvents(events)
-      console.log(events)
+      try {
+        const events = await api.get("https://eventsphere-server-mfdb.onrender.com/api/events")
+        setEvents(events)
+        console.log(events)
+        isLoading(false)
+      } catch (e) {
+        console.log(e)
+        setIsLoading(true)
+      }
     }
     GetEventDetail()
   }, [])
@@ -173,19 +181,20 @@ export default function ExplorePage() {
           </span>
         </div>
       </div>
-
-      {/* Events Grid */}
       <div className="space-y-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {events.map(event => {
-            return <EventCard key={event._id || event.id} event={event} />
-          })}
+          {isLoading ?
+            [...Array(8)].map(() => <Skeleton />)
+          : events.map(event => {
+              return <EventCard key={event._id || event.id} event={event} />
+            })
+          }
         </div>
-        {/* Bottom indicator */}
-        <div className="py-6 flex justify-center">
-          <div className="flex items-center gap-2 text-xs text-stone-400">
-            <span>Showing all 4 results for this filter</span>
-          </div>
+      </div>
+      {/* Bottom indicator */}
+      <div className="py-6 flex justify-center">
+        <div className="flex items-center gap-2 text-xs text-stone-400">
+          <span>Showing all 4 results for this filter</span>
         </div>
       </div>
     </div>
