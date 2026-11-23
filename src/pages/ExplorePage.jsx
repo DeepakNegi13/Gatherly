@@ -2,26 +2,74 @@ import Skeleton from "#components/common/Skeleton"
 import EventCard from "#components/events/EventCard"
 import api from "#lib/axios"
 import { Bookmark, Calendar, MapPin, RefreshCcw, Search, X } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { useInView } from "react-intersection-observer"
 
+const PAGE_SIZE = 8
+
 export default function ExplorePage() {
-  const { ref, inView } = useInView()
+  //use inview hook
+  const { ref, inView } = useInView({ threshold: 0.1 })
   const [isLoading, setIsLoading] = useState(true)
+  const [isLoadingMore, setIsLoadingMore] = useState(false)
   const [events, setEvents] = useState([])
-  useEffect(() => {
-    const GetEventDetail = async () => {
-      try {
-        const events = await api.get("/api/events")
-        setEvents(events)
-        setIsLoading(false)
-      } catch (e) {
-        console.log(e)
-        setIsLoading(true)
-      }
+
+  //for rendering more events on scroll
+  const [page, setPage] = useState(1)
+  const [hasMore, setHasMore] = useState(true)
+  const isLoadingRef = useRef(false)
+
+  //get event details
+  const getEventDetails = useCallback(async (pageNumber = 1, append = false) => {
+    if (isLoadingRef.current) return
+
+    isLoadingRef.current = true
+
+    try {
+      const nextEvents = await api.get(`/api/events?page=${pageNumber}&limit=${PAGE_SIZE}`)
+      const eventList = Array.isArray(nextEvents) ? nextEvents : []
+
+      setEvents(previousEvents => {
+        if (!append) return eventList
+
+        const existingIds = new Set(previousEvents.map(event => event._id || event.id))
+        const uniqueEvents = eventList.filter(event => !existingIds.has(event._id || event.id))
+        return [...previousEvents, ...uniqueEvents]
+      })
+      setPage(pageNumber)
+      setHasMore(eventList.length === PAGE_SIZE)
+    } catch (error) {
+      console.error(error)
+      if (!append) setEvents([])
+      setHasMore(false)
+    } finally {
+      isLoadingRef.current = false
+      setIsLoading(false)
+      setIsLoadingMore(false)
     }
-    GetEventDetail()
   }, [])
+
+  //for first time render
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      getEventDetails(1)
+    }, 0)
+
+    return () => clearTimeout(timeoutId)
+  }, [getEventDetails])
+
+  //for exlore more events
+  useEffect(() => {
+    if (inView && hasMore && !isLoading && !isLoadingMore) {
+      const timeoutId = setTimeout(() => {
+        setIsLoadingMore(true)
+        getEventDetails(page + 1, true)
+      }, 0)
+
+      return () => clearTimeout(timeoutId)
+    }
+  }, [getEventDetails, inView, hasMore, isLoading, isLoadingMore, page])
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 pb-20">
       {/* Header */}
@@ -158,7 +206,7 @@ export default function ExplorePage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-stone-500 pt-2 border-b border-[#EBE8DF] pb-3">
         <div className="flex items-center gap-2 flex-wrap">
           <span>
-            Showing <strong className="text-stone-800">4</strong> events of 42
+            Showing <strong className="text-stone-800">{events.length}</strong> events
           </span>
 
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-orange-50 text-[#C2410C] border border-orange-200">
@@ -194,7 +242,8 @@ export default function ExplorePage() {
       </div>
       {/* Bottom indicator */}
       <div className="py-6 flex justify-center" ref={ref}>
-        <h2>{`Header inside viewport ${inView}.`}</h2>
+        {isLoadingMore && <p className="text-sm text-stone-500">Loading more events...</p>}
+        {!isLoading && !isLoadingMore && !hasMore && events.length > 0 && <p className="text-sm text-stone-500">No more events</p>}
       </div>
     </div>
   )
