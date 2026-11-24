@@ -1,6 +1,12 @@
-import { Bookmark, Calendar, ChevronDown, MapPin, MoveRight, RefreshCw, Search } from "lucide-react";
+import { formate } from "../../store/slices/filterSlice"
+import { Bookmark, Calendar, ChevronDown, MapPin, MoveRight, RefreshCw, Search } from "lucide-react"
+import { useDispatch } from "react-redux"
 
 export default function EventFilterBar() {
+  const format = ["all formats", "in-person", "online", "hybrid"]
+  const Admission = ["all", "free", "paid"]
+  const dispatch = useDispatch()
+
   return (
     <div className="space-y-4">
       {/* Top Search & Primary Filters Row */}
@@ -136,31 +142,24 @@ export default function EventFilterBar() {
       <div className="flex items-center justify-between text-xs text-stone-500 flex-wrap gap-2 pt-1">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="font-semibold text-stone-700">Format:</span>
-          <button type="button" className="px-2.5 py-1 rounded-lg border text-xs font-medium capitalize transition-all cursor-pointer bg-stone-800 text-white border-stone-800">
-            All Formats
-          </button>
-          <button type="button" className="px-2.5 py-1 rounded-lg border text-xs font-medium capitalize transition-all cursor-pointer bg-white border-[#DDD9CE] text-stone-600 hover:bg-stone-50">
-            In-Person
-          </button>
-          <button type="button" className="px-2.5 py-1 rounded-lg border text-xs font-medium capitalize transition-all cursor-pointer bg-white border-[#DDD9CE] text-stone-600 hover:bg-stone-50">
-            Online
-          </button>
-          <button type="button" className="px-2.5 py-1 rounded-lg border text-xs font-medium capitalize transition-all cursor-pointer bg-white border-[#DDD9CE] text-stone-600 hover:bg-stone-50">
-            Hybrid
-          </button>
+          {format.map((elem, id) => {
+            return (
+              <button key={id} type="button" className="px-2.5 py-1 rounded-lg border text-xs font-medium capitalize transition-all cursor-pointer bg-white border-[#DDD9CE] text-stone-600 hover:bg-stone-50" onClick={dispatch(formate(elem))}>
+                {elem}
+              </button>
+            )
+          })}
         </div>
 
         <div className="flex items-center gap-2">
           <span className="font-semibold text-stone-700">Admission:</span>
-          <button type="button" className="px-2.5 py-1 rounded-lg border text-xs font-medium transition-all cursor-pointer bg-stone-800 text-white border-stone-800">
-            All
-          </button>
-          <button type="button" className="px-2.5 py-1 rounded-lg border text-xs font-medium transition-all cursor-pointer bg-white border-[#DDD9CE] text-stone-600 hover:bg-stone-50">
-            Free
-          </button>
-          <button type="button" className="px-2.5 py-1 rounded-lg border text-xs font-medium transition-all cursor-pointer bg-white border-[#DDD9CE] text-stone-600 hover:bg-stone-50">
-            Paid
-          </button>
+          {Admission.map((e, id) => {
+            return (
+              <button key={id} type="button" className="px-2.5 py-1 rounded-lg border text-xs font-medium transition-all cursor-pointer bg-stone-800 text-white border-stone-800">
+                {e}
+              </button>
+            )
+          })}
         </div>
       </div>
     </div>
