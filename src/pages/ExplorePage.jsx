@@ -13,7 +13,7 @@ export default function ExplorePage() {
   const [isLoading, setIsLoading] = useState(true)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
   const [pagination, setPagination] = useState({ page: 1, total: 0, hasMore: false })
-  const formate = useSelector(state => state.filterSlice.formate)
+  const Filter = useSelector(state => state.filterSlice)
   async function fetchEvents(page = 1, append = false) {
     // Show the initial skeleton for page one and a footer state for later pages.
     if (page === 1) {
@@ -22,7 +22,7 @@ export default function ExplorePage() {
       setIsLoadingMore(true)
     }
     try {
-      const { data: events, pagination } = await api.get(`/api/events?page=${page}&&format=${formate}`)
+      const { data: events, pagination } = await api.get(`/api/events?page=${page}&&format=${Filter.formate}`)
 
       if (append) {
         setEvents(prev => [...prev, ...events])
@@ -42,7 +42,7 @@ export default function ExplorePage() {
   useEffect(() => {
     // Fetch the first page once after the Explore route mounts.
     fetchEvents(1, false)
-  }, [formate])
+  }, [Filter.formate])
 
   const { ref: observerRef, inView } = useInView({ threshold: 0.5 })
 

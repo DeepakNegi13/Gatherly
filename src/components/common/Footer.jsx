@@ -2,6 +2,14 @@ import { ShieldCheck } from "lucide-react"
 import { Link } from "react-router-dom"
 import { GatherlyLogo } from "../../assets/icons/GatherlyLogo"
 function Footer() {
+  const city = [
+    ["Bengaluru", "(Silicon Plateau)"],
+    ["Mumbai", "(Arts & Live Indie)"],
+    ["Delhi NCR", "(Founders & Conclaves)"],
+    ["Pune", "(Heritage & Engineering)"],
+    ["Hyderabad", "(Fintech & Sports)"],
+  ]
+  const coat = "Gatherly. Crafted with intention for communities."
   // Footer provides persistent discovery links and platform trust information.
   return (
     <footer className="bg-[#181816] text-[#E5E3DC] pt-16 pb-12 border-t border-[#2B2A27]">
@@ -22,31 +30,13 @@ function Footer() {
           <div className="space-y-3">
             <p className="text-xs font-bold uppercase tracking-wider text-white">Hubs</p>
             <ul className="space-y-2 text-sm text-[#A8A59C]">
-              <li>
-                <Link to="/explore?city=Bengaluru" className="hover:text-white transition-colors">
-                  Bengaluru (Silicon Plateau)
-                </Link>
-              </li>
-              <li>
-                <Link to="/explore?city=Mumbai" className="hover:text-white transition-colors">
-                  Mumbai (Arts & Live Indie)
-                </Link>
-              </li>
-              <li>
-                <Link to="/explore?city=Delhi NCR" className="hover:text-white transition-colors">
-                  Delhi NCR (Founders & Conclaves)
-                </Link>
-              </li>
-              <li>
-                <Link to="/explore?city=Pune" className="hover:text-white transition-colors">
-                  Pune (Heritage & Engineering)
-                </Link>
-              </li>
-              <li>
-                <Link to="/explore?city=Hyderabad" className="hover:text-white transition-colors">
-                  Hyderabad (Fintech & Sports)
-                </Link>
-              </li>
+              {city.map((key, id) => {
+                return (
+                  <Link to={`/explore?city=${key[0]}`} key={id} className="hover:text-white transition-colors">
+                    {key[0]} {key[1]}
+                  </Link>
+                )
+              })}
             </ul>
           </div>
 
@@ -88,7 +78,9 @@ function Footer() {
         </div>
 
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#7A776F] gap-4">
-          <p>© {new Date().getFullYear()} Gatherly. Crafted with intention for communities.</p>
+          <p>
+            © {new Date().getFullYear()} {coat}
+          </p>
         </div>
       </div>
     </footer>
